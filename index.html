@@ -1,12 +1,15 @@
 <!doctype html>
 <html>
 <head>
-<!-- 0.0.5 -->
+<!-- 0.0.7 -->
 <META charset="utf-8">
 <title>new</title>
 <link rel="icon" type="image/png" href="/favicon.ico" />
 <style type="text/css">
 body{margin:0;background-color:#eeeeee;padding:0 20px 0;}
+input,button,textarea,select,option{font-family:inherit;font-size:inherit;}
+
+
 ul{margin-top:0}
 h{color:blue;font-size:1.2em;}
 t{color:red;}
@@ -31,7 +34,7 @@ e{color:violet;font-size:1.2em;}
 	background:-webkit-linear-gradient(top, #ffdddd 0%,white 30%,#ffdddd 100%);
 	background:-o-linear-gradient(top, #ffdddd 0%,white 30%,#ffdddd 100%);
 	background:linear-gradient(top, #ffdddd 0%,white 30%,#ffdddd 100%);}
-.bt_cr{border:1px solid black; border-radius:1em;
+.bt_cr{width:1.2em;height:1.2em;padding:0;border:1px solid black; border-radius:50%;
     background: -moz-radial-gradient(30% 30%,cover, white 0%,#ffaaaa 100%);margin:0 5px;
 	background: -webkit-radial-gradient(30% 30%,cover, white 0%,#ffaaaa 100%);
 	background: -o-radial-gradient(30% 30%, cover, white 0%,#ffaaaa 100%);
@@ -1051,20 +1054,27 @@ margin-bottom:10px;padding-top:10px;overflow:hidden;">
 </ul></li>
 <li hd><h>META</h> - настраивает заголовок страницы, каждая установка выполняется отдельным тэгом
 <ul>Атрибуты:
-<li><t>charset = <q>utf-8</q></t> - установка кодировки всего документа</li>
+<li><t>charset = <q>utf-8</q></t> - установка кодировки всего документа (для html  5)</li>
 <li><t>http-equiv=<q>параметр</q></t> установка кодировки http 
 <div style="margin-left:20px; border-left:2px solid yellow;"><b>Варианты переменных и значений:</b><br>
-<t>Content-Type</t> - установка формата документа по умолчанию (text/html)<br>
+<t>Content-Type</t> - установка формата документа по умолчанию (text/html;charset=utf-8)<br>
 <t>Content-Script-Type</t> - установка языка скрипта по умолчанию (text/javascript или application/javascript)<br>
 <t>expires</t> - установка даты после которой страница считается устаревшей (дата в формате)<br>
 <t>pragma</t> - способ кэширования документа <br>
-<t>refresh</t> - загрузка другого документа (другой html-документ)<br>
+<t>refresh</t> - загрузка другого документа ("Nсекунд;url=ссылка")<br>
 </div></li>
 <li><t>name=<q>параметр</q></t> установка переменной которой присваивается значение
 <div style="margin-left:20px; border-left:2px solid yellow;"><b>Варианты переменных и значений:</b><br>
-<t>keywords</t> - установка ключевых слов (перечисляются через запятую)<br>
+<t>viewport</t> - установка ширины начала масштабирования на гаджетах("width= ширина") <br>
+<t>viewport</t> - отмена масштабирования("width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0") <br>
+<t>format-detection</t> - отмена в IOS пребразования ном-телефона в ссылку ("telephone=no")<br>
+<t>keywords</t> - установка ключевых слов для SEO(перечисляются через запятую)<br>
 <t>author</t> - установка автора документа (фио или название фирмы)<br>
 <t>description</t> - установка описания текущего документа (текст)<br>
+<t>robots</t> - отмена индексации (none)<br>
+<t>description</t> - установка описания текущего документа (текст)<br>
+<t>Copyright</t> - установка авторских прав (фио или название фирмы)<br>
+<t>Address</t> - установка адреса автора (текст)<br>
 </div></li>
 <li><t>content=<q>значение</q></t> - устанавливает значение переменной указанной в <t>name</t> или <t>http-equiv</t></li>
 </ul></li>
@@ -1109,7 +1119,7 @@ margin-bottom:10px;padding-top:10px;overflow:hidden;">
 <div hidden>
 <h>ТЭГ</h>..<h>/ТЭГ</h> - простой блок, разные названия нужны только для стилей (DIV, HEADER, FOOTER, MAIN, HGROUP, NAV, SECTION, ARTICLE, ASIDE)<br>
 <h>TEMPLATE</h>..<h>/TEMPLATE</h> - объединяющий и скрывающий блок, применяют для шаблонов управляемых javascript<br>
-<h>P</h>..<h>/P</h> - блок-абзац попускает строку вверху и внизу, содержит только строчные элементы
+<h>P</h>..<h>/P</h> - блок-абзац пропускает строку вверху и внизу, содержит только строчные элементы
 <button onclick="show_tag(this)" data-html="['',{tag:'P',in:''},'']">show</button><br>
 <h>H1</h><h>H2</h><h>H3</h><h>H4</h><h>H5</h><h>H6</h> - блоки-абзацы 
 по умолчанию форматируют текст по размеру шрифта
@@ -1125,7 +1135,7 @@ margin-bottom:10px;padding-top:10px;overflow:hidden;">
 <h>BLOCKQUOTE</h>..<h>/BLOCKQUOTE</h> - абзац имеющий левый и правый отступ<button onclick="show_tag(this)" data-html="['',{tag:'BLOCKQUOTE',in:''},'']">show</button><br>
 <h>HR</h> - создание горизонтальной линии на всю ширину только из границы<button onclick="show_tag(this)" data-html="['',{tag:'HR'},'']">show</button><br>
 <br><div>
-Глобальные аттрибути (могут применяться к любым тэгам):
+Глобальные аттрибуты (могут применяться к любым тэгам):
 <ul>
 <li><t>accesskey = <q>буква</q> </t>- установка комбинации Alt+буква для создания клика на элементе</li>
 <li><t>name = <q>имя</q> </t>- присвоение имени элемента (должно быть уникально для типа элемента)</li>
@@ -1145,7 +1155,7 @@ margin-bottom:10px;padding-top:10px;overflow:hidden;">
 </div>
 </div>
 
-<h3 class="my_b1">Списочные и табличные тэги - зазмещают контент по-строчно</h3> 
+<h3 class="my_b1">Списочные и табличные тэги - размещают контент по-строчно</h3> 
 <div hidden>
 <ul><li>Списки<br>
 <h>UL</h> список элементов <h>/UL</h> - контейнер для ненумерованого списка элементов LI
@@ -1177,7 +1187,7 @@ show_tag(this)" data-html="['',{tag:'table',attr:{'border':1},in:
 <li><t>bordercolor = <q>цвет</q> </t>- установка цвета рамки</li>
 <li><t>cellpadding = <q>число</q> </t>- установка отступа контента ячейки от рамки</li>
 <li><t>cellspacing = <q>число</q> </t>- установка расстояния между рамками ячеек</li>
-<li><t>cols = <q>число</q> </t>- установка количества ячеек</li>
+<li><t>cols = <q>число</q> </t>- установка зараннее количества колонок </li>
 <li><t>frame = <q>void/border/above/below/hsides/vsides/rhs/lhs</q> </t>- установка внешних границ в разных вариантах</li>
 <li><t>rules = <q>all/groups/cols/none/rows</q> </t>- установка рамок между ячейками</li>
 <li><t>summary = <q>текст</q> </t>- установка названия таблицы - не отображается</li>
@@ -1207,8 +1217,8 @@ show_tag(this)" data-html="['',{tag:'table',attr:{'border':1},in:
 <li><t>bordercolor = <q>цвет</q> </t>- установка цвета рамки</li>
 <li><t>char = <q>символ</q> </t>- выравнивание контента по указанному символу (если align="char")</li>
 <li><t>charoff = <q>число</q> </t>- смещение всех символов на N символов вправо/влево (если align="char" и есть char)</li>
-<li><t>align = <q>left(ум)/center/right/justify/char</q> </t>- установка горизонтального выравнивания конткнта каждой ячейки строки</li>
-<li><t>valign = <q>top/middle(ум)/bottom/baseline</q> </t>- установка вертикального выравнивания конткнта каждой ячейки строки</li>
+<li><t>align = <q>left(ум)/center/right/justify/char</q> </t>- установка горизонтального выравнивания контента каждой ячейки строки</li>
+<li><t>valign = <q>top/middle(ум)/bottom/baseline</q> </t>- установка вертикального выравнивания контента каждой ячейки строки</li>
 <li><t>width = <q>число</q> </t>- установка ширины ячейки</li>
 <li><t>height = <q>число</q> </t>- установка высоты ячейки</li>
 </ul>
@@ -1217,15 +1227,15 @@ show_tag(this)" data-html="['',{tag:'table',attr:{'border':1},in:
 <ul>Аттрибуты:
 <li><t>align = <q>left(ум)/right/top/bottom</q> </t>- установка горизонтального выравнивания заголовка и размещение его сверху/снизу от таблицы</li>
 </ul>
-<h>THEAD</h>строки<h>/THEAD</h> - блок в TABLE как контейнер строк выделяет заголовок (он один)</li>
-<h>TBODY</h>строки<h>/TBODY</h> - блок в TABLE как контейнер строк основных данных (их может быть несколько)</li>
+<h>THEAD</h>строки<h>/THEAD</h> - блок в TABLE как контейнер строк выделяет заголовок (он один)<br>
+<h>TBODY</h>строки<h>/TBODY</h> - блок в TABLE как контейнер строк основных данных (их может быть несколько)<br>
 <h>TFOOT</h>строки<h>/TFOOT</h> - блок в TABLE как контейнер строк выделяет итоги (он один)
 <ul>Аттрибуты:
 <li><t>bgcolor = <q>цвет</q> </t>- установка фонового цвета</li>
 <li><t>char = <q>символ</q> </t>- выравнивание строки по указанному символу (если align="char")</li>
 <li><t>charoff = <q>число</q> </t>- смещение всех символов на N символов вправо/влево (если align="char" и есть char)</li>
-<li><t>align = <q>left(ум)/center/right/justify/char</q> </t>- установка горизонтального выравнивания конткнта каждой ячейки строки</li>
-<li><t>valign = <q>top/middle(ум)/bottom/baseline</q> </t>- установка вертикального выравнивания конткнта каждой ячейки строки</li>
+<li><t>align = <q>left(ум)/center/right/justify/char</q> </t>- установка горизонтального выравнивания контента каждой ячейки строки</li>
+<li><t>valign = <q>top/middle(ум)/bottom/baseline</q> </t>- установка вертикального выравнивания контента каждой ячейки строки</li>
 </ul>
 
 <h>COL</h><h>/COL</h> - создание шаблона одной строки для установки характеристик столбца/столбцов с установленным форматом (для 1/N столбцов)
@@ -1239,8 +1249,8 @@ show_tag(this)" data-html="['',{tag:'table',attr:{'border':1},in:
 <li><t>span = <q>число</q> </t>- количество колонок для которых применяются характеристики (ум - 1)</li>
 <li><t>char = <q>символ</q> </t>- выравнивание строки по указанному символу (если align="char")</li>
 <li><t>charoff = <q>число</q> </t>- смещение всех символов на N символов вправо/влево (если align="char" и есть char)</li>
-<li><t>align = <q>left(ум)/center/right/justify/char</q> </t>- установка горизонтального выравнивания конткнта каждой ячейки строки</li>
-<li><t>valign = <q>top/middle(ум)/bottom/baseline</q> </t>- установка вертикального выравнивания конткнта каждой ячейки строки</li>
+<li><t>align = <q>left(ум)/center/right/justify/char</q> </t>- установка горизонтального выравнивания контента каждой ячейки строки</li>
+<li><t>valign = <q>top/middle(ум)/bottom/baseline</q> </t>- установка вертикального выравнивания контента каждой ячейки строки</li>
 <li><t>width = <q>число</q> </t>- установка ширины ячейки</li>
 </ul>
 
@@ -1271,7 +1281,7 @@ show_tag(this)" data-html="['',{tag:'table',attr:{'border':1},in:
 
 <ul>Аттрибуты:
 <li><t>src = <q>файл</q> </t>- Путь к графическому файлу. </li>
-<li><t>align = <q>bottom/left/middle/right/top"></q> </t>- Определяет как рисунок будет выравниваться по краю и способ обтекания текстом. </li>
+<li><t>align = <q>bottom/left/middle/right/top</q> </t>- Определяет как рисунок будет выравниваться по краю и способ обтекания текстом. </li>
 <li><t>alt = <q>текст</q> </t>- текст отображаемый при невозможности отобразить изображения </li>
 <li><t>border = <q>число</q> </t>- Толщина рамки вокруг изображения. </li>
 <li><t>longdesc = <q>файл</q> </t>- Указывает адрес документа, где содержится аннотация к картинке. </li>
@@ -2125,7 +2135,7 @@ in
 </ul>
 Аттрибуты текста
 <ul>
-<li><t>font-faily=<q>имя_шрифта</q></t> - имя_шрифта</li>
+<li><t>font-family=<q>имя_шрифта</q></t> - имя_шрифта</li>
 <li><t>font-size=<q>N</q></t> - размер</li>
 <li><t>font-style=<q>стиль_шрифта</q></t> - стиль_шрифта</li>
 <li><t>font-weight=<q>жирность_шрифта</q></t> - жирность_шрифта</li>
@@ -2236,6 +2246,7 @@ in
 </li>
 <li></li><li></li></ul>
 </li></ul>
+
 <math>
 <mo>&PlusMinus;</mo><msup><mi>M</mi><mn>2</mn></msup> 
 <msubsup><mo>&sum;</mo><mi>M+1</mi><mn>2-10</mn></msubsup>
@@ -2426,13 +2437,13 @@ data-style="span:not(.class_span) {background-color:#eaa;}"
 <li><k>:target</k> - стиль тэга имеющий аттрибут id="имя_id" и он отображен в аддресной строке браузера (href="..#имя_id")</li></ul></li>
 
 <li>Псевдоклассы иерархической структуры
-<ul><li><k>:first-of-type</k> - тэги из полученного списка являющиеся первыми для своего родителя
+<ul><li><k>:first-of-type</k> - тэги выбранного типа из полученного списка являющиеся первыми для своего родителя
 <button onclick="show_tag(this)"
 data-html="['',{tag:'ul',attr:{class:'cl_fot'},in:[{tag:'li',in:''},{tag:'li',in:''}]},'',{tag:'ul',attr:{class:'cl_fot'},in:[{tag:'li',in:''},{tag:'li',in:''}]},'']"
 data-style=".cl_fot>li:first-of-type {background-color:#eaa;}"
 >show</button><br>
 </li>
-<li><k>:last-of-type</k> - тэги из полученного списка являющиеся последними для своего родителя
+<li><k>:last-of-type</k> - тэги выбранного типа из полученного списка являющиеся последними для своего родителя
 <button onclick="show_tag(this)"
 data-html="['',{tag:'ul',attr:{class:'cl_fot'},in:[{tag:'li',in:''},{tag:'li',in:''}]},'',{tag:'ul',attr:{class:'cl_fot'},in:[{tag:'li',in:''},{tag:'li',in:''}]},'']"
 data-style=".cl_fot>li:last-of-type {background-color:#eaa;}"
@@ -2444,7 +2455,7 @@ data-html="['',{tag:'ul',attr:{class:'cl_fot'},in:{tag:'li',in:''}},'',{tag:'ul'
 data-style=".cl_fot>li:only-of-type {background-color:#eaa;}"
 >show</button><br>
 </li>
-<li><k>:nth-of-type(порядок)</k> - стиль для тэга(ов) указаного типа, пересчитанный у родителя с начала, выбираемый по порядку:
+<li><k>:nth-of-type(порядок)</k> - стиль для тэга(ов) выбранного типа, пересчитанный у родителя с начала, выбираемый по порядку:
 N-число - один N-й тэг,N-число <k>n</k> - каждый N-й тэг,N-число <k>n +</k> M-число - каждый N-й+M тэг, 
 <k>odd</k> - все не четные,<k>even</k> - все четные 
 <button onclick="show_tag(this)"
@@ -2461,7 +2472,7 @@ data-style=".cl_fot>li:nth-of-type(2n+1) {background-color:#eaa;}"
 >show</button>
 <br>
 </li>
-<li><k>:nth-last-of-type(порядок)</k> - стиль для тэга(ов) указаного типа, пересчитанный у родителя с конца, выбираемый по порядку:
+<li><k>:nth-last-of-type(порядок)</k> - стиль для тэга(ов) выбранного типа, пересчитанный у родителя с конца, выбираемый по порядку:
 N-число - один N-й тэг,N-число <k>n</k> - каждый N-й тэг,N-число <k>n +</k> M-число - каждый N-й+M тэг, 
 <k>odd</k> - все не четные,<k>even</k> - все четные  </li>
 <li><k>:first-child</k> - у родителей выбранных тэгов выбирается первый дочерний тэг любого типа
@@ -3116,7 +3127,7 @@ data-style="div.sel_num {text-transform:capitalize; border:1px solid black;}"
 нижний индекс/верхний индекс/самой нижней строке/самой верхней строке/верх</li> 
 <li s>white-space:normal/nowrap(одна строка)/pre(как у пользователя)/pre-line/pre-wrap(как у пользователя с переносом) - восприятие пробелов и переносов</li>
 <li s>word-break:normal/break-all/keep-all - перенос длинных слов</li>
-<li s>word-spacing:norma/Npx - дополнительное расстояниемежду словами
+<li s>word-spacing:normal/Npx - дополнительное расстояниемежду словами
 <button onclick="show_tag(this)"
 data-html="['',{tag:'div',attr:{class:'sel_num'},in:['','','','','']},'']"
 data-style="div.sel_num {word-spacing:10px; border:1px solid black;}"
@@ -3208,7 +3219,7 @@ data-style=".cl_fot:first-of-type{counter-reset:num_count0;} .cl_fot{counter-res
 </ul></li>
 <li s>cursor: [url('файл_курсора'),..]auto/crosshair/default/e-resize/help/move/n-resize/ne-resize/nw-resize
 /pointer/progress/s-resize/se-resize/sw-resize/text/w-resize/wait - форма курсора расположенного над тэгом (стандарт зависит от ОС)</li>
-<li s>direction:ltr(ум)/rtl - установка порядка следование прямой/обратный(справа-налево)<br>
+<li s>direction:ltr(ум)/rtl - установка порядка следование прямой/обратный(справа-налево) 
 в тексте-буквы, в таблице-очередность колонок, в блоке-положение полосы прокрутки, текст с text-align:justify - положение последней висячей строки </li>
 <li s>resize:none/both/horizontal/vertical - (для тэга textarea) запрет или возможность изменять пользователем размер поля</li>
 <li s>scrollbar-[3dlight/arrow/base/darkshadow/face/highlight/shadow/track]-color:цвет - раскраска полосы прокрутки</li>
@@ -3283,8 +3294,8 @@ data-scr="document.getElementById('test_result').innerHTML = (1+5, 10/2, 2*2);"
 data-scr="a='Math.PI'; document.getElementById('test_result').innerHTML = eval(a);"
 >show</button>
 </li>
-<li c>имя_переменной=выражение - создание переменной в глобальной области видимости: windows</li>
-<li c>var имя_переменной - создание переменной в начале функции со значением undefined (не нависит в каком месте ф-ии расположен - "поднятие переменных"), позже присваивается значение разрушается при выходе из ф-ии</li>
+<li c>имя_переменной=выражение - создание переменной в глобальной области видимости: <c>window</c></li>
+<li c>var имя_переменной - создание переменной в начале функции со значением undefined (не зависит в каком месте ф-ии расположен - "поднятие переменных"), позже присваивается значение, разрушается при выходе из ф-ии</li>
 <li c es>let имя_переменной - создание переменной в указанном месте блока, разрушается при выходе из блока</li>
 <li c es>const имя_переменной=выражение - создание постоянной переменной в указанном месте блока, разрушается при выходе из ф-ии</li>
 <li c es>.. [пер1,пер2,..,перN=значN] = [знач1,знач2,..] - присвоение списку переменных списка значений, со значением по умолчанию</li>
@@ -3341,7 +3352,7 @@ data-scr="document.getElementById('test_result').innerHTML = parseInt('123ab45')
 data-scr="document.getElementById('test_result').innerHTML = parseFloat('123E5 AB')+', '+parseFloat('-.123E5AB',);"
 >show</button>
 		</li>
-		<li c>.toString() - метод авто-преобразования в строковый тип, выполняется при принятии ф-ии только строкового значения
+		<li c>.toString() - метод преобразования в строковый тип, выполняется автоматически при принятии ф-ии только строкового значения
 		<button onclick="show_tag(this)" data-html="[{tag:'span',attr:{id:'test_result'}}]"
 data-scr="a=123; document.getElementById('test_result').innerHTML = parseInt(a);"
 >show</button>
@@ -3432,21 +3443,21 @@ data-scr="n1=26; document.getElementById('test_result').innerHTML = (n1).toStrin
 		</ul>
 </li>
 <li><span class="my_b1"><c>String</c> - строковый класс элементарного типа, литералы:"A",'A',' \' '(упр. послед-ть),'\xFF'(16-р код чимвола ASCII),'\uFFFF'(16-р код чимвола Unicode)</span>
-		<ul hidden><li ht>управляющие символы в литералах
+		<ul hidden><li hd>управляющие символы в литералах
 		<ul>
-		<li>\b - Возврат (Backspace)</li>
-		<li>\f - Перевод или прогон страницы (Form feed)</li>
-		<li>\n - Перевод строки (New line)</li>
-		<li>\r - Возврат каретки (Carriage return)</li>
-		<li>\t - Табуляция (Tab)</li>
-		<li>\v - Вертикальная табуляция (Vertical tab)</li>
-		<li>\' - Апостроф или одинарная кавычка</li>
-		<li>\" - Двойная кавычка</li>
-		<li>\\ - Обратная косая черта (Backslash)</li>
-		<li>\777 - Символ в кодировке Latin-1, представленный тремя восьмеричными числами XXX от 0 до 377. Например, \251 (символ ©).
-		<li>\xFF - Символ в кодировке Latin-1, представленный двумя шестнадцатеричными числами XX от 00 до FF. Например, \xA9 (символ ©).	
-		<li>\uFFFF - Символ в Unicode, представленный четырьмя шестнадцатеричными числами XXXX. Например, \u00A9 (символ ©).
-		<li>\u{FFFFF} - Символ в UTF-32BE. Например, \u{2F804} обозначает то же, что обычная запись \uD87E\uDC04.</li>
+		<li><c>\b</c> - Возврат (Backspace)</li>
+		<li><c>\f</c> - Перевод или прогон страницы (Form feed)</li>
+		<li><c>\n</c> - Перевод строки (New line)</li>
+		<li><c>\r</c> - Возврат каретки (Carriage return)</li>
+		<li><c>\t</c> - Табуляция (Tab)</li>
+		<li><c>\v</c> - Вертикальная табуляция (Vertical tab)</li>
+		<li><c>\'</c> - Апостроф или одинарная кавычка</li>
+		<li><c>\"</c> - Двойная кавычка</li>
+		<li><c>\\</c> - Обратная косая черта (Backslash)</li>
+		<li><c>\777</c> - Символ в кодировке Latin-1, представленный тремя восьмеричными числами XXX от 0 до 377. Например, \251 - символ ©.
+		<li><c>\xFF</c> - Символ в кодировке Latin-1, представленный двумя шестнадцатеричными числами XX от 00 до FF. Например, \xA9 - символ ©.	
+		<li><c>\uFFFF</c> - Символ в Unicode, представленный четырьмя шестнадцатеричными числами XXXX. Например, \u00A9 - символ ©.
+		<li><c>\u{FFFFF}</c> - Символ в UTF-32BE. Например, \u{2F804} обозначает то же, что обычная запись \uD87E\uDC04.</li>
 
 		</ul>
 		</li>
@@ -3457,21 +3468,31 @@ data-scr="a='test'; document.getElementById('test_result').innerHTML = a.length;
 >show</button>		
 		</li>
 <li c>'стр1'+'стр2'+ . . .  / String.concat('стр1','стр2', . . . ) - объединение нескольких строк в одну</li>
-		<li c>[N]/.charAt(N) -  возвращает символ в позиции N, за пределами массива .charAt() возвращает исключение, а [] - только значение undefined
+		<li c>[N]/.charAt(N) -  возвращает символ в позиции N (начало с 0), за пределами массива .charAt() возвращает исключение, а [] - только значение undefined
 <button onclick="show_tag(this)" data-html="[{tag:'span',attr:{id:'test_result'}}]"
 data-scr="a='test'; document.getElementById('test_result').innerHTML = a[1];"
 >show</button>			
 		</li>
+		<li c>.charCodeAt(N) - код символа в позиции <v>N</v>
+<button onclick="show_tag(this)" data-html="[{tag:'span',attr:{id:'test_result'}}]"
+data-scr="document.getElementById('test_result').innerHTML = 'h'.charCodeAt(0);"
+>show</button>			
+		</li>		
 		<li c>.substring(N,[M+1])/.slice(N,[M+1])/.substr(N,[L])  - возвращает подстроку с позиции <v>N</v> [до позиции <v>M</v>/длиной <v>L</v>], при о
 <button onclick="show_tag(this)" data-html="[{tag:'span',attr:{id:'test_result'}}]"
 data-scr="a='testing'; document.getElementById('test_result').innerHTML = a.substring(1,5)+ ' '+a.slice(1,5)+' '+ a.substr(3,3);"
 >show</button>
 		</li>
-		<li c>.indexOf("str",[N-нач])/.lastIndexOf("str",[N-нач]) - поиск совпадения с подстрокой с начала/конца, получить номер позиции/неудача -1
+		<li c>.indexOf("str",[N-нач])/.lastIndexOf("str",[N-нач]) - поиск совпадения с подстрокой с начала/конца, получить номер позиции, при неудаче возвращает -1
 <button onclick="show_tag(this)" data-html="[{tag:'span',attr:{id:'test_result'}}]"
 data-scr="a='testing test'; document.getElementById('test_result').innerHTML = a.indexOf('est')+' '+a.indexOf('est',2)+' '+a.lastIndexOf('est')+' '+a.lastIndexOf('est',9)+' '+a.lastIndexOf('est',8)+' '+a.indexOf('best');"
 >show</button>		
 		</li>
+		<li c>.includes("стр",[N-начало]) - подтверждение наличия указанной подстроки в текущей [поиск начинать с символа N]
+<button onclick="show_tag(this)" data-html="[{tag:'span',attr:{id:'test_result'}}]"
+data-scr="a='test'; document.getElementById('test_result').innerHTML = a.includes('st');"
+>show</button>			
+		</li>		
 		<li c>другой_тип.toString() - метод авто-преобразования в строковый тип</li>
 		<li c>другой_тип.valueOf() - метод авто-преобразования в числовой тип</li>
 		<li c>.trim()/.trimLeft()/.trimRight() - удаление всех ведущих и/или замыкающих пробелов
@@ -3494,11 +3515,7 @@ data-scr="document.getElementById('test_result').innerHTML = String.fromCharCode
 data-scr="document.getElementById('test_result').innerHTML = String.fromCodePoint(123,222);"
 >show</button>			
 		</li>		
-		<li c>.charCodeAt(N) - код символа в позиции <v>N</v>
-<button onclick="show_tag(this)" data-html="[{tag:'span',attr:{id:'test_result'}}]"
-data-scr="document.getElementById('test_result').innerHTML = 'h'.charCodeAt(0);"
->show</button>			
-		</li>
+
 		
 		<li c>.toLowerCase() / .toUpperCase() - создание новой строки в нижнем/верхнем регистре
 <button onclick="show_tag(this)" data-html="[{tag:'span',attr:{id:'test_result'}}]"
@@ -3510,17 +3527,13 @@ data-scr="a='Test Number One Тестирование'; document.getElementById(
 data-scr="a='test';document.getElementById('test_result').innerHTML = a.localeCompare('aest') + ' '+a.localeCompare('test') + ' '+a.localeCompare('vest') ;" 
 >show</button>			
 		</li>
-		<li c>.includes("стр",[N-начало]) - подтверждение наличия указанноу подстроки в текущей [поиск начинать с символа N]
-<button onclick="show_tag(this)" data-html="[{tag:'span',attr:{id:'test_result'}}]"
-data-scr="a='test'; document.getElementById('test_result').innerHTML = a.includes('st');"
->show</button>			
-		</li>
+
 		<li c es>.normalize(['способ']) - нормализация(преобразование) строки с текстовым unicode в unicode-символы 
 <button onclick="show_tag(this)" data-html="[{tag:'span',attr:{id:'test_result'}}]"
 data-scr="a='test\u00A9'; document.getElementById('test_result').innerHTML = a.normalize();"
 >show</button>			
 		</li>
-		<li c>.search(рег_выр / "строка_рег_выр","флаг") - поиск 1-го соответствия, получить N позиции или -1
+		<li c>.search(рег_выр / "строка_рег_выр","флаг") - поиск 1-го соответствия, получить N позиции, при неудаче -1
 <button onclick="show_tag(this)" data-html="[{tag:'span',attr:{id:'test_result'}}]"
 data-scr="a='Testing test'; document.getElementById('test_result').innerHTML = a.search('test')+' '+a.search(/test/gi);"
 >show</button>			
@@ -3530,12 +3543,12 @@ data-scr="a='Testing test'; document.getElementById('test_result').innerHTML = a
 data-scr="a='Testing test'; document.getElementById('test_result').innerHTML = a.replace('te','be')+' * '+a.replace(/te/gi,'be')+' * '+a.replace(/te/gi,'-$&-')+' * '+a.replace(/te/gi,function(a){return '('+a+')';});"
 >show</button>		
 		</li>
-		<li c>.match(рег_выр / "строка_рег_выр","флаг") - (нет - null)получение массива всех (g) соотверствий/ для первого (без g) соотверствия массив [0]-найденная строка,[1,2..]-все под-выражения,масс.index-позицтия начала соответствия,масс.input-вся строка
+		<li c>.match(рег_выр / "строка_рег_выр","флаг") - (нет - null)получение особого массива всех (g) соотверствий/ для первого (без g) соотверствия массив [0]-найденная строка,[1,2..]-все под-выражения,<c>масс.index</c>-позицтия начала соответствия,<c>масс.input</c>-вся строка
 <button onclick="show_tag(this)" data-html="[{tag:'span',attr:{id:'test_result'}}]"
 data-scr="a='Testing test'; a1=a.match(/te/i); document.getElementById('test_result').innerHTML = a.match('te')+' * '+a.match(/te/gi)+' * '+a1+' * '+a1.index+' * '+a1.input;"
 >show</button>			
 		</li>
-		<li hd>Методы создания HTML, но устаревшие
+		<li hd>Методы (устаревшие) создания строки с HTML разметкой
 		<ul>
 		<li c>.anchor('имя') - создание HTML метки: "<h>a name='имя'</h> строка <h>/a</h>"</li>
 		<li c>.big()/bold()/fixed()/italics()/small()/strike()/sub()/sup() - обрамление в тэги</li>
@@ -3547,9 +3560,9 @@ data-scr="a='Testing test'; a1=a.match(/te/i); document.getElementById('test_res
 		<ul>
 		<li c>encodeURI("строка") / decodeURI("код-строка")  - получить закодированую/декодированую строку
 		(кодируются буквы, цифры кроме - _ . ! ~ * ' ( )   и   ; / ? : @ & = + $ , #  )</li>
-		<li c>escape("строка") / unescape("код-строка") - устаревшее кодирование/декодирование</li>
 		<li c>encodeURIComponent("строка") / decodeURIComponent("код-строка") - получить закодированую/декодированую строку
 		(кодируются все символы, кроме - _ . ! ~ * ' ( )  )</li>
+		<li c>escape("строка") / unescape("код-строка") - устаревшее кодирование/декодирование</li>
 		</ul></li>		
 		<li c es>.endsWith("строка",[N-позиц]) - определяет что конец текущей строки заканчивается под-строкой / до N-позиц строка заканчивается под-строкой
 <button onclick="show_tag(this)" data-html="[{tag:'span',attr:{id:'test_result'}}]"
@@ -3561,14 +3574,14 @@ data-scr="a='Testing test'; document.getElementById('test_result').innerHTML = a
 data-scr="a='Testing test'; document.getElementById('test_result').innerHTML =  a.startsWith('Test')+' '+a.startsWith('ing',4)"
 >show</button>			
 		</li>			
-		<li c es>String.raw`строка ${..}` - строка с вычисляемыми вставками но без управляющих символов
+		<li c es>String.raw`строка ${вычисление} строка` - строка с вычисляемыми вставками но без управляющих символов
 <button onclick="show_tag(this)" data-html="[{tag:'span',attr:{id:'test_result'}}]"
 data-scr="a=2; document.getElementById('test_result').innerHTML = String.raw`Test ${5+4+a}`;"
 >show</button>			
 		</li>
-		<li c es>String.raw({raw:масс_строк},стр1,стр2,..) - масс_строк/строка(массив символов) с вычисляемыми вставками но без управляющих символов, аргументы подставляются между эл.массива
+		<li c es>String.raw({raw:масс_строк},стр1,стр2,..) - масс_строк/строка(как массив символов) с вычисляемыми вставками но без управляющих символов, аргументы подставляются между эл.массива
 <button onclick="show_tag(this)" data-html="[{tag:'span',attr:{id:'test_result'}}]"
-data-scr="a=2; document.getElementById('test_result').innerHTML = String.raw({raw:'test'},'oo','__','+++');"
+data-scr="a=2; document.getElementById('test_result').innerHTML = String.raw({raw:['test','RR','TT','SS']},'oo','__','+++');"
 >show</button>			
 		</li>	
 		<li c es>.repeat(N) - возвращает новую строку в которой подряд повторяется текущая N раз
@@ -3581,7 +3594,7 @@ data-scr="a='Test1'; document.getElementById('test_result').innerHTML = a.repeat
 data-scr="a='Test1'; document.getElementById('test_result').innerHTML = a.padStart(10,'=')+' '+ a.padEnd(10,'-');"
 >show</button>			
 		</li>			
-		<li c es>[Symbol.iterator]() - возвращает итератор строки установленый до первого символа, позволяет: .next()-перевод указателя к следующему символу, .value-значение символа
+		<li c es>[Symbol.iterator]() - возвращает итератор строки установленый до первого символа, позволяет: <c>.next()</c>-перевод указателя к следующему символу, <c>.value</c>-значение символа под указателем
 <button onclick="show_tag(this)" data-html="[{tag:'span',attr:{id:'test_result'}}]"
 data-scr="a='Test1'[Symbol.iterator]() ; document.getElementById('test_result').innerHTML = a.next().value+' '+a.next().value;"
 >show</button>			
@@ -3625,7 +3638,7 @@ data-scr="a='Test1'[Symbol.iterator]() ; document.getElementById('test_result').
 		</ul>
 </li>
 <li><span class="my_b1"><c>Object</c> - объектный класс - коллекция именованых/пронумерованых значений</span>
-		<ul hidden><li c>имя = new Класс() / ={[св1:знач1,св2:знач2,..]} - создание объекта функцией-конструктором/литералом</li>
+		<ul hidden><li c>имя = new Класс() / ={} / ={св1:знач1,св2:знач2,..} - создание объекта функцией-конструктором/литералом</li>
 		<li c es>var {пер1,пер2,...}={пер1:знач1,пер2:знач2,...} - присвоение значений переменным через об с такими же именами свойств</li>
 
 		<li c>object.имя_св / object["имя_св"]/ delete object.имя_св - создание и доступ/удаление собственных свойств/методов объекта (при одинаковых именах - перекрывает свойство прототипа)</li>
@@ -3636,12 +3649,12 @@ data-scr="a='Test1'[Symbol.iterator]() ; document.getElementById('test_result').
 		<li c>.hasOwnProperty("имя_св")/.propertyIsEnumerable("имя_св")/ "имя_св" in об / об["имя_св"] - проверка наличия собственного (не наследованого)/перечисляемого/любого свойства, возвращает true/false</li>
 		<li c>.isPrototypeOf(об1) - текущий объект является об-прототипом для об1</li>
 		<li c>Object.getPrototypeOf(об) / об.__proto__ - получить объект прототипа указанного об</li>
-		<li c>for(перем in имя_О) {ком1-комN} - перем получает имя каждого "имя_свойства"
+		<li c>for(перем in имя_О) {ком1-комN} - в цикле перем получает имя каждого "имя_свойства"
 
-		<li>Классы - функция для создания объектов
-			<ul><li c>new Класс - создает пустой об и передает ссылку на него в this функции-конструктора, добавляет об прототипа</li>
+		<li>Класс - функция для создания объектов
+			<ul><li c>new Класс - создает пустой об и передает ссылку на этот объект в this функции-конструктора, добавляет об прототипа</li>
 			<li c>Класс() - функция-конструктор инициализирует все свойства,методы - this.имя</li>
-			<li c>Класс.имя_св=function(){..} - создание статической функции, не имеющих this</li>
+			<li c>Класс.имя_св=function(){..} - создание статической функции, не имеющей this</li>
 			<li c>Класс.prototype - ссылка на объект, предоставляет все свои свойства(для чтения) для наследия (применяют для методов и констант)</li>
 			<li c>Класс.prototype.conctructor - ссылка на функцию-конструктор создавшую прототип</li>
 			<li c>this.имя_св=function(){return значение} - создание в конструкторе закрытого свойства (изменить нельзя - только вычислить)</li>
@@ -3660,13 +3673,20 @@ data-scr="a='Test1'[Symbol.iterator]() ; document.getElementById('test_result').
 			<li c es>об={__proto__:об1..имя(..){..super.имя()}} - подключение прототипа (наследование) и выполнение в методе метода прототипа</li>
 			<li c es>class Класс [extends Класс1]{constructor(){},..} - создание класса [унаследованого от другого класса]</li>
 			<li c es>class Класс extends Класс1 {constructor(){super(..)..},..} - выполнение в первой строке конструктора родительского конструктора</li>
-			<li c es>class Класс ..{static имя(){},..} - объявление статической ф-ии</li>>
+			<li c es>class Класс ..{static имя(){},..} - объявление статической ф-ии</li>
 			<li c es>Класс = class [Класс1]{constructor(){},..} - создание класса на лету [именованого]</li>
-			<li c>Object.defineProperty(об,"имя_св-ва", об_дескриптор) - создание/изменение одного свойства, где об_дескриптор: данных(содержит значения которое можно/нельзя записывать) или доступа(содержир геттеры и сеттеры)
-			configurable:true/false - разрешение изменять, удалять св-во, enumerable:true/false - разрешение перечислять св-во,
-			value:значение - значение св-ва, writable:true/false - возможность присваивание "=",
-			get:ф-я - "геттер" это функция вычисляет значение свойства, set:ф-я(арг) - "сеттер" это функция принимает одно значение свойства для вычислений 
+			<li c>Object.defineProperty(об,"имя_св-ва", об_дескриптор) - создание/изменение одного свойства, где об_дескриптор: 
+			<ul><li>д-р данных(содержит значения, которое можно/нельзя записывать) или </li>
+			<li>д-р доступа(содержир методы геттер и/или сеттер)</li>
+			<li>configurable:true/false - разрешение изменять, удалять св-во, </li>
+			<li>enumerable:true/false - разрешение перечислять св-во,</li>
+			<li>value:значение - значение св-ва, </li>
+			<li>writable:true/false - возможность присваивание "=",</li>
+			<li>get:ф-я - "геттер" это функция вычисляет значение свойства, </li>
+			<li>set:ф-я(арг) - "сеттер" это функция принимает одно значение свойства для вычислений 
+			</li></ul>
 			</li>
+			<li c>Object.keys(об) - получение массива имен свойств об</li>
 		</ul>
 		</li>
 				
@@ -3675,7 +3695,7 @@ data-scr="a='Test1'[Symbol.iterator]() ; document.getElementById('test_result').
 </li>
 <li><span class="my_b1"><c>Array</c> - объектный класс - коллекция пронумерованых значений</span>
 		<ul hidden><li c>имя = new Array([знач1,знач2..]/[N]) / =[знач1,знач2..] - создание массива функцией-конструктором/литералом</li>
-		<li c es>[пер1,пер2,...]=[знач1,знач2,...] - присвоение начений переменным через массив</li>
+		<li c es>[пер1,пер2,...]=[знач1,знач2,...] - присвоение значений переменным через массив</li>
 
 		<li c>[N] - доступ к элементу массива для чтения/записи</li>
 		<li c>delete array[N] - удаление элемента массива, остается значение undefined</li>
@@ -3692,8 +3712,8 @@ data-scr="a='Test1'[Symbol.iterator]() ; document.getElementById('test_result').
 		<li c>.concat(эл1,эл2,..,масс1,масс2,..) - возвращает новый массив, созданный добавив в конец этого же массива указанных элементов, элементов из других массивов</li>
 		<li c>.indexOf(значение,[нач_позиц])/.lastIndexOf(значение,[нач_позиц]) - поиск значения с начала/конца, возвращает индекс или -1</li>
 		<li>.<c>forEach</c>(<v>function(знач,[индекс,весь_масс]){код}</v>) - для кождого эл выполняется функция, получающая 1/2/3 аргумента</li>
-		<li>.<c>map</c>(<v>function(знач,[индекс,весь_масс]){код return нов_значен}</v>) - создание новго массива из преоразованых элементов этого с помощью ф-ии</li>
-		<li>.<c>filter</c>(<v>function(знач,[индекс,весь_масс]){код return true/false}</v>) - создание новго массива в виде выборки для которых функция возвращает true</li>
+		<li>.<c>map</c>(<v>function(знач,[индекс,весь_масс]){код return нов_значен}</v>) - создание нового массива из преоразованых элементов этого с помощью ф-ии</li>
+		<li>.<c>filter</c>(<v>function(знач,[индекс,весь_масс]){код return true/false}</v>) - создание нового массива в виде выборки для которых функция возвращает true</li>
 		<li>.<c>every</c>(<v>function(знач,[индекс,весь_масс]){код return true/false}</v>) - возвращает true,ести для всех элементов функция возвращает true</li>
 		<li>.<c>some</c>(<v>function(знач,[индекс,весь_масс]){код return true/false}</v>) - возвращает true,ести хотя бы для одного элемента функция возвращает true</li>
 		<li>.<c>reduce</c>(<v>function(пред_результ,знач,[индекс,весь_масс]){код return результ}, [нач_результ]</v>) - возвращает результат после последовательного выполнения ф-ии для каждого элемента функция</li>
@@ -3701,13 +3721,13 @@ data-scr="a='Test1'[Symbol.iterator]() ; document.getElementById('test_result').
 		<li es>.<c>find</c>(<v>function(знач,[индекс,весь_масс]){код return true/false}</v>) - возвращает значение первого найденного элемента для которого функция возвращает true</li>
 		<li es>.<c>findIndex</c>(<v>function(знач,[индекс,весь_масс]){код return true/false}</v>) - возвращает index первого найденного элемента для которого функция возвращает true</li>
 		<li es>.<c>includes</c>(<v>знач,[индекс_нач]</v>) - поиск элемента имеющего указанное значения, если оно найдено - возвращает true, иначе false</li>
-		<li c es>.copyWithin(инд_встав,инд_нач,[инд_кон]) - замена значений начиная с позици инд_встав на копии элементов скопированых из позиций инд_нач до инд_кон/конца не включая</li>
-		<li c es>.fill(знач,[инд_нач],[инд_кон]) - замена значений на указанное начиная с позици инд_нач/сначала до инд_кон/конца, не включая</li>
-		<li c es>.entries() - создание итератора, который .next()-перемещается и возвращает об, который .value-массив из 2-х элементов: [индекс,значение]</li>
-		<li c es>.keys() - создание итератора, который .next()-перемещается и возвращает об, который .value-индекс элемента, .done - признак конца массива</li>
-		<li c es>.values() - создание итератора, который .next()-перемещается и возвращает об, который .value-значение элемента, .done - признак конца массива, позволяет обходить цикл for(let перем of итератор){..}</li>
+		<li c es>.copyWithin(инд_встав,инд_нач,[инд_кон+1]) - замена значений начиная с позици инд_встав на копии элементов скопированых из позиций инд_нач до инд_кон/конца не включая</li>
+		<li c es>.fill(знач,[инд_нач],[инд_кон+1]) - замена значений на указанное начиная с позици инд_нач/сначала до инд_кон/конца, не включая</li>
+		<li c es>.entries() - создание итератора, который <c>.next()</c>-перемещается и возвращает об, который <c>.value</c>-массив из 2-х элементов: [индекс,значение]</li>
+		<li c es>.keys() - создание итератора, который <c>.next()</c>-перемещается и возвращает об, который <c>.value</c>-индекс элемента, <c>.done</c> - признак конца массива</li>
+		<li c es>.values() - создание итератора, который <c>.next()</c>-перемещается и возвращает об, который <c>.value</c>-значение элемента, <c>.done</c> - признак конца массива, позволяет обходить цикл for(let перем of итератор){..}</li>
 		<li c es>for(let перем of масс){..} - цикл перебора всех элементов</li>
-		<li c es>масс[Symbol.iterator]() - создание итератора</li>
+		<li c es>масс[Symbol.iterator]() - создание итератора (аналог .values() )</li>
 		<li c>Array.from(масс,[ф-я(знач,инд){..return нов_знач}][об для ф-ии]) - создание простого массива из любого об похожего на массив [преобразуея элементы, применяя контекст]</li>
 		<li c>Array.isArray(арг) - проверка что аргумент является массивом</li>
 		<li c>Array.of(знач1,знач2,..) - создание массива из значений любого типа</li>
@@ -3721,21 +3741,21 @@ data-scr="a='Test1'[Symbol.iterator]() ; document.getElementById('test_result').
 		<li c>.has(ключ) - проверка наличия пары по ключу, возврат true/false</li>
 		<li c>.delete(ключ) - удаление пары по ключу</li>
 		<li c>.clear() - удаление всех пар</li>
-		<li c>.entries() - создание итератора, который .next()-перемещается и возвращает об, который .value-массив из 2-х элементов: [индекс,значение]</li>
-		<li c>.keys() - создание итератора, который .next()-перемещается и возвращает об, который .value-ключ элемента, .done - признак конца массива</li>
-		<li c>.values() - создание итератора, который .next()-перемещается и возвращает об, который .value-значение элемента, .done - признак конца массива, позволяет обходить цикл for(let перем of итератор){..}</li>
+		<li c>.entries() - создание итератора, который <c>.next()</c>-перемещается и возвращает об, который <c>.value</c>-массив из 2-х элементов: [индекс,значение]</li>
+		<li c>.keys() - создание итератора, который <c>.next()</c>-перемещается и возвращает об, который <c>.value</c>-ключ элемента, <c>.done</c> - признак конца массива</li>
+		<li c>.values() - создание итератора, который <c>.next()</c>-перемещается и возвращает об, который <c>.value</c>-значение элемента, <c>.done</c> - признак конца массива, позволяет обходить цикл for(let перем of итератор){..}</li>
 		<li c>for(let перем/[пер_кл,пер_знач] of масс[.keys()/.values()]){..} - цикл перебора всех элементов</li>
 		<li>.<c>forEach</c>(<v>function(знач,[ключ,весь_масс]){код}</v>) - для кождого эл выполняется функция, получающая 1/2/3 аргумента</li>
 		</ul>
 </li>
 <li><span class="my_b1"><c es>Set</c> - коллекция из уникальных элементов любого типа (подобие массива)</span>
-		<ul hidden><li c>new Set() / new Map([знач1,знач2,..]) - создание массива / со значениями</li>
+		<ul hidden><li c>new Set() / new Set([знач1,знач2,..]) - создание массива / со значениями</li>
 		<li c>.size - получить количество всех значений в массиве</li>
 		<li c>.add(знач) - добавление одного эл, возвращает сам массив (можно создавать цепочку)</li>
 		<li c>.has(знач) - проверка наличия эл по значению, возврат true/false</li>
 		<li c>.delete(знач) - удаление эл по ключу</li>
 		<li c>.clear() - удаление всех эл</li>
-		<li c>.entries() /.keys() / .values() - создание итератора, который .next()-перемещается и возвращает об, который .value-значение элемента, .done - признак конца массива, позволяет обходить цикл for(let перем of итератор){..}</li>
+		<li c>.entries() /.keys() / .values() - создание итератора, который <c>.next()</c>-перемещается и возвращает об, который <c>.value</c>-значение элемента, <c>.done</c> - признак конца массива, позволяет обходить цикл for(let перем of итератор){..}</li>
 		<li c>for(let перем of масс){..} - цикл перебора всех элементов</li>
 		<li>.<c>forEach</c>(<v>function(знач,[знач,весь_масс]){код}</v>) - для кождого эл выполняется функция, получающая 1/2/3 аргумента, где 1 и 2 одинаковы</li>
 		</ul>
@@ -3748,7 +3768,7 @@ data-scr="a='Test1'[Symbol.iterator]() ; document.getElementById('test_result').
 		<li c>.delete(ключ) - удаление пары по ключу</li>
 		</ul>
 </li>
-<li><span class="my_b1"><c es>WeakSet</c> - коллекция из уникальных элементов-объектов,  позволяет автоматически удалить пару если объект (ссылка передана в значение) был удален за пределами</span>
+<li><span class="my_b1"><c es>WeakSet</c> - коллекция из уникальных элементов-объектов,  позволяет автоматически удалить элемент если объект (ссылка передана в значение) был удален за пределами</span>
 		<ul hidden><li c>new WeakSet() / new WeakSet([знач1,знач2,..]) - создание массива / со значениями</li>
 		<li c>.add(знач) - добавление одного эл</li>
 		<li c>.has(знач) - проверка наличия эл по значению, возврат true/false</li>
@@ -3758,40 +3778,40 @@ data-scr="a='Test1'[Symbol.iterator]() ; document.getElementById('test_result').
 	
 <li><span class="my_b1"><c>Function</c> - объектный класс связанный с исполняемым кодом</span>
 		<ul hidden><li c>function имя(аргум){код[return[значение];]} - объявление ф-ии и привязка к ее к контексту через <c>this</c> (внешнему объекту где она объявлена, чаще window), где производится поиск переменных, при их отсутствии - во внешнем, выполяется "поднятие" ф-ии - использовать ф-ю можно во всем текущем контексте</li>
-		<li c>имя = function[имя_локаль](аргум){код} - функция определяется во время выполнения (синтаксического анализа) и сохраняется в свойстве имя (имя_локаль - только для рекурсивного вызова этой ф-ии)</li>
-		<li es><c>имя = (аргум)=&gt;{код}</c> - функция определяется во время выполнения (синтаксического анализа) и сохраняется в свойстве имя, не имеет собственного this, круглые скобки опускаются если один аргумент, фигурные скобки у выражения опускаются тело состоит только из {return выражениe}</li>
+		<li c>имя = function[имя_локаль](аргум){код} - функция определяется во время выполнения (синтаксического анализа) и сохраняется в свойстве имя (имя_локаль - применяют только для рекурсивного вызова этой ф-ии)</li>
+		<li es><c>имя = (аргум)=&gt;{код}</c> - функция определяется во время выполнения (синтаксического анализа) и сохраняется в свойстве имя, не имеет собственного this, круглые скобки опускаются если один аргумент, если фигурные скобки у выражения опускаются - тело состоит только из {return выражениe}</li>
 		<li c>имя = new Function(["арг1","арг2",..],"код") - создание глобальной функции во время исполнения при каждом вызове</li>
 		<li><c>имя_ф=(function(){var имя_пер,ф-я..return function(){изменение имя_пер})()</c> - создание ф-ии с закрытой (недоступной) переменной - замыкание</li>
 		<li c es>.name - имя фнкции</li>
 		<li c>.toString() - метод авто-преобразования в строковый тип</li>
 		<li c>.valueOf() - метод авто-преобразования в числовой тип</li>
-		<li c>.length - количество аргументов указанных в объявлении (внутри функции - arguments.callee.length)</li>
+		<li c>.length - количество аргументов указанных в объявлении (получить внутри функции - arguments.callee.length)</li>
 		<li c>.prototype - объект участвующий в функции-конструкторе применяя <c>new</c></li>
 		<li c>.имя_пер - создание статической открытой переменной (значение сохраняется между вызовами)</li>
-		<li c>.call(об_контекст,арг1,арг2,..)/.apply(об_контекст,[арг1,арг2,..]) - запуск функции в контексте объекта (как метод объекта) и этот об является this(функции выполняются в контексте их определения)</li>
-		<li c>.bind(об_контекст,арг1,арг2,..) - создание новой ф-ии при выполении которой будет выполнять эту ф-ю в указанном контексте выполнения (аналогично .call(..))</li>
+		<li c>.call(об_контекст,арг1,арг2,..)/.apply(об_контекст,[арг1,арг2,..]) - запуск функции в контексте объекта (как метод объекта) и этот об является this (обычно функции выполняются в контексте их определения)</li>
+		<li c>.bind(об_контекст,арг1,арг2,..) - создание новой ф-ии при выполении которой будет выполнять эту ф-ю в указанном контексте выполнения с указанными аргументами (аналогично .call(..))</li>
 		<li c>.isGenerator() - проверка является ли ф-я генератором</li>
-		<li><b>Внутри функции :</b>
+		<li hd><b>Внутри функции :</b>
 		<ul><li c>arguments - ссылка на об/массив типа Arguments</li>
 		<li c>arguments[N]/ имя_арг - получение значения N-го/по имени аргумента</li>
-		<li c>arguments.length - количество аргументов полученных при выполнении (можно писать)</li>
+		<li c>arguments.length - количество аргументов полученных при выполнении (в нее можно писать)</li>
 		<li c>arguments.callee(..) - ссылка на эту функцию не применяя имя функции (для рекурсивного вызова)</li>
 		<li c>this - ссылка на объект контекста(пространство имен) где описан метод/функция (для глобальных функций - window,для методов объектов - этот объект)</li>
 		<li c>(function(имя_перем){код обращения к библиотеке - имя_перем})(имя_библиотеки) - избежание конфликта имен</li>
 		<li c>with(объект){код} - выполнение кода при наличии объекта в области видимости (доступ к свойствам - напрямую) </li>
 		</ul></li>
-		<li><b es>Функции-генераторы - это ф-ии выполняемые частично с помощью итератора</b>
+		<li hd><b es>Функции-генераторы</b> - это ф-ии выполняемые частично с помощью итератора
 		<ul><li c>function* имя(аргум){yield [значение]..[return[значение];]} - определение ф-ии-генератора</li>
-		<li c>iter = имя(..) - получение итератора ф-ии-генератора</li>
+		<li c>iter = имя(..) - получение итератора ф-ии-генератора, а не выполнение ф-ии</li>
 		<li c>iter.next() - запуск часть ф-ии до оператора yield [значение] или return[значение], возвращает об {value:значение,done:true/false}, где done определяет завершение ф-ии или оператор конца return</li>
 		<li c>iter.next() - запуск часть ф-ии до оператора yield* ф-я-генертор1(), а далее выполняется другая ф-я-генертор до оператора yield [значение]</li>
 		<li c>iter.next(значен) - yield является переменной в которую передается значен и зпуск этой строки</li>
 		</ul></li>		
-		<li><b es>Асинхронные функции - функция после выполнения возвращает Promise значение не сразу, а после получения значений - await X</b>
-		<ul><li c>asinc function имя(аргум){..} - определение асинхронной ф-ии</li>
+		<li hd><b es>Асинхронные функции</b> - функция после выполнения возвращает Promise-значение, но выполняется не сразу, а после получения значений указанных после оператора <c>await</c>
+		<ul><li c>asinc function имя(аргум){..await..} - определение асинхронной ф-ии</li>
 		<li c>имя = asinc function [имя](аргум){..} - определение асинхронной ф-ии</li>
 		<li c>имя = new AsincFunction("арг1","арг2",..,"код") -  определение асинхронной ф-ии</li>
-		<li c>имя(..).then(ф-я_успех,ф-я_ошибка) - выполнение асинхронной ф-ии </li>
+		<li c>имя(..).then(ф-я_успех,ф-я_ошибка) - обработчик (завершение выполнения) асинхронной ф-ии </li>
 		</ul></li>				
 		</ul>
 </li>
@@ -3817,7 +3837,7 @@ data-scr="a=new Date(); document.getElementById('test').innerHTML = a;"
 		<li>.<c>get[UTC]+FullYear/Month/Date/Day/Hours/Minutes/Seconds/Milliseconds</c>() - получить значения</li>
 		<li>.<c>get[UTC]Time</c>() - время в мс</li>
 		<li>.<c>getTimezoneOffset</c>() - разница между временем универсальным-UTF и местным временем</li>
-		<li>.<c>set[UTC]+FullYear/Month/Date/Day/Hours/Minutes/Seconds/Milliseconds</c>() - установить новые значения</li>
+		<li>.<c>set[UTC]+FullYear/Month/Date/Day/Hours/Minutes/Seconds/Milliseconds</c>(N) - установить новые значения</li>
 		<li>.<c>to[Locale]DateString</c>()/.<c>toUTCString</c>()/.<c>toString</c>()/.<c>to[Locale]TimeString</c>() - метод преобразования в строковый тип</li>
 		<li c>.valueOf() - метод авто-преобразования в числовой тип</li>
 		<li><c>Date.UTC</c>([год,месяц,[число,часы, минуты, секунды, мс]) - получить N-мс UTC</li>
@@ -3830,6 +3850,11 @@ data-scr="a=new Date(); document.getElementById('test').innerHTML = a;"
 <button onclick="show_tag(this)" data-html="[{tag:'span',attr:{id:'test_result'}}]"
 data-scr="a1=/\w+/gi; a2=new RegExp('\\w+','gi');  document.getElementById('test_result').innerHTML = 'Hello world!'.match(a1).toSource()+'Hello world!'.match(a1).toSource();"
 >show</button>			
+		</li>
+		<li hd>Флаги
+		<ul><li>i-"ignoreCase"не чувствовать регистр</li>
+		<li>g-"global"получить все соответствия</li>
+		<li>m-"multiline"много строчный поиск (признаки ^,$ - имеет каждая строки)</li></ul>
 		</li>
 		<li c>.lastIndex - свойство результатов .exec()/.test() для "g" и повторного запуска(при поиске в новой строке: об.lastIndex=0)</li>
 		<li c>.source - (чтение)свойство строка рег.выражения
@@ -3859,61 +3884,61 @@ data-scr="a1=/\w+/gim; document.getElementById('test_result').innerHTML = a1.mul
 		</li>
 		<li c>.toString() - метод авто-преобразования в строковый тип</li>
 		<li c>.valueOf() - метод авто-преобразования в числовой тип</li>
-		<li c>.exec("строка") - (нет - null) поиск первого (для g: повторно - второго,..) соотверствия массив [0]-найденная строка,[1,2..]-все под-выражения,масс.index-позицтия начала соответствия,масс.input-вся строка, для g - об.lastIndex(позиция символа после найденной,нет-0)
+		<li c>.exec("строка") - (нет - null) поиск первого (для g: повторно - второго,..) соотверствия массив [0]-найденная строка,[1,2..]-все под-выражения,<c>масс.index</c>-позицтия начала соответствия,<c>масс.input</c>-вся строка, для g - <c>об.lastIndex</c>(позиция символа после найденной,нет-0)
 <button onclick="show_tag(this)" data-html="[{tag:'span',attr:{id:'test_result'}}]"
 data-scr="a1=/\w+/ig; a3='Hello world!'; a2=a1.exec(a3); document.getElementById('test_result').innerHTML = a2.toSource()+a2.input+a1.lastIndex+a1.exec(a3)+a1.lastIndex;"
 >show</button>				
 		</li>
-		<li c>.test("строка") - (true/false) проверяет наличие первого (для g: повторно - второго,..) соотверствия, для g - об.lastIndex(позиция символа после найденной,нет-0)
+		<li c>.test("строка") - (true/false) проверяет наличие первого (для g: повторно - второго,..) соотверствия, для g - <c>об.lastIndex</c>(позиция символа после найденной,нет-0)
 <button onclick="show_tag(this)" data-html="[{tag:'span',attr:{id:'test_result'}}]"
 data-scr="a1=/\w+/ig; a3='Hello world!'; a2=a1.test(a3); document.getElementById('test_result').innerHTML = ''+a2+a1.lastIndex+a1.test(a3)+a1.lastIndex;"
 >show</button>			
 		</li>
-		<li>Грамматика регулярного выражения (флаги:i-"ignoreCase"не чувствовать регистр,g-"global"получить все соответствия,m-"multiline"много строчный поиск (^$-имеют все строки))
+		<li hd>Грамматика регулярного выражения 
 		<ul><li><c>ABCabcАБВабв123</c> - любые символы и цифры в установленном порядке</li>
 <button onclick="show_tag(this)" data-html="[{tag:'span',attr:{id:'test_result'}}]"
 data-scr="a1=/Hell/gi; document.getElementById('test_result').innerHTML = 'Hello world!'.match(a1).toSource();"
 >show</button>
-		<li>\символ(0,t,n,v,f,r,..),\xFF,\uFFFF,\cA-\cZ - управляющие символы,Latin,Unicode,управляющий символ (ctrl+A - ctrl+Z)
-				<ul><li>. - любой символ не разделитель
+		<li hd>\символ(0,t,n,v,f,r,..),\xFF,\uFFFF,\cA-\cZ - управляющие символы, Latin, Unicode, управляющий символ (ctrl+A - ctrl+Z)
+				<ul><li c>. - любой символ не разделитель
 <button onclick="show_tag(this)" data-html="[{tag:'span',attr:{id:'test_result'}}]"
 data-scr="a1=/...../gi; document.getElementById('test_result').innerHTML = 'Hello \nworld!'.match(a1).toSource();"
 >show</button>					
 				</li>
-				<li>\s,\S - любой символ пробела, табуляии, пробельные / не пробельный
+				<li c>\s,\S - любой символ пробела, табуляии, пробельные / не пробельный
 <button onclick="show_tag(this)" data-html="[{tag:'span',attr:{id:'test_result'}}]"
 data-scr="a1=/\s/gi;a2=/\S/gi; document.getElementById('test_result').innerHTML = 'Hello \nworld!'.match(a1).toSource()+'Hello \nworld!'.match(a2).toSource();"
 >show</button>					
 				</li>
-				<li>\w,\W - любой текстовый или цифровой ASCII (a-zA-Z0-9_) / не текстовый
+				<li c>\w,\W - любой текстовый или цифровой ASCII (a-zA-Z0-9_) / не текстовый
 <button onclick="show_tag(this)" data-html="[{tag:'span',attr:{id:'test_result'}}]"
 data-scr="a1=/\w/gi;a2=/\W/gi; a3='Hello \nworld!_1+2'; document.getElementById('test_result').innerHTML = a3.match(a1).toSource()+a3.match(a2).toSource();"
 >show</button>					
 				</li>
-				<li>\d,\D - цифры(0-9) / не цифры
+				<li c>\d,\D - цифры(0-9) / не цифры
 <button onclick="show_tag(this)" data-html="[{tag:'span',attr:{id:'test_result'}}]"
 data-scr="a1=/\d/gi;a2=/\D/gi; a3='Hello \nworld!_1+2'; document.getElementById('test_result').innerHTML = a3.match(a1).toSource()+a3.match(a2).toSource();"
 >show</button>					
 				</li>
-				<li>\b,\B - граница слова (место в вначале или в конце слова 0-й длины)/ не граница слова (до или после идет символ а не пробел)
+				<li c>\b,\B - граница слова (место в вначале или в конце слова 0-й длины)/ не граница слова (до или после идет символ а не пробел)
 <button onclick="show_tag(this)" data-html="[{tag:'span',attr:{id:'test_result'}}]"
 data-scr="a1=/\b\w/gi;a2=/\w\b/gi; a3='Hello \n world! _ 1+2'; document.getElementById('test_result').innerHTML = a3.match(a1).toSource()+a3.match(a2).toSource();"
 >show</button>					
 				</li>
 				</ul>
 			</li>
-			<li>^,$,.,*,+,?,=,!,:,|,\,/,(,),[,],{,} - спец-символы рег.выражения (для применения этого символа - спереди добавляют обратный слэш: \символ)
-				<ul><li>/ - начало и конец литерала рег.выражения
+			<li hd>^,$,.,*,+,?,=,!,:,|,\,/,(,),[,],{,} - спец-символы рег.выражения (для применения этого символа - спереди добавляют обратный слэш: \символ)
+				<ul><li c>/ - начало и конец литерала рег.выражения
 <button onclick="show_tag(this)" data-html="[{tag:'span',attr:{id:'test_result'}}]"
 data-scr="a1=/\//gi; a3='Hello \n world! /_ /1+2'; document.getElementById('test_result').innerHTML = a3.match(a1).toSource();"
 >show</button>					
 				</li>
-				<li>^ - признак начала всей строки
+				<li c>^ - признак начала всей строки
 <button onclick="show_tag(this)" data-html="[{tag:'span',attr:{id:'test_result'}}]"
 data-scr="a1=/^\w\w/gi; a3='Hello \n world! _ 1+2'; document.getElementById('test_result').innerHTML = a3.match(a1).toSource();"
 >show</button>					
 				</li>
-				<li>$ - конец строки
+				<li c>$ - конец строки
 <button onclick="show_tag(this)" data-html="[{tag:'span',attr:{id:'test_result'}}]"
 data-scr="a1=/...$/gi; a3='Hello \n world! _ 1+2'; document.getElementById('test_result').innerHTML = a3.match(a1).toSource();"
 >show</button>					
@@ -3923,37 +3948,37 @@ data-scr="a1=/...$/gi; a3='Hello \n world! _ 1+2'; document.getElementById('test
 data-scr="a1=/[hgw][eo][^ab]l[d-o]/gi; a3='Hello \n world! _ 1+2'; document.getElementById('test_result').innerHTML = a3.match(a1).toSource();"
 >show</button>					
 				</li>
-				<li>символ?,символ*,символ+,символ{N},символ{N,[M]} - повторение символа 0или1/0или более/1или более/N раз/отN[доM]раз 
+				<li c>символ?,символ*,символ+,символ{N},символ{N,[M]} - повторение символа 0или1/0или более/1или более/N раз/отN[доM]раз 
 <button onclick="show_tag(this)" data-html="[{tag:'span',attr:{id:'test_result'}}]"
 data-scr="a1=/[hgw]?[eo]*[lr]+[d-o _!\d]{1,}/gi; a3='Hello \n world! _ 1+2'; document.getElementById('test_result').innerHTML = a3.match(a1).toSource();"
 >show</button>					
 				</li>
-				<li>символ повтор ? - дополнение повтора символом "?" выбирает наименший вариант
+				<li c>символ повтор ? - дополнение повтора символом "?" выбирает наименший вариант
 <button onclick="show_tag(this)" data-html="[{tag:'span',attr:{id:'test_result'}}]"
 data-scr="a1=/l+?/gi; a2=/l+/gi;  a3='Hello \n world! _ 1+2'; document.getElementById('test_result').innerHTML = a3.match(a1).toSource()+a3.match(a2).toSource();"
 >show</button>					
 				</li>
-				<li>выраж1 | выраж2 - поиск слева-направо вариантов выражений (как логическое ИЛИ)
+				<li c>выраж1 | выраж2 - поиск слева-направо вариантов выражений (как логическое ИЛИ)
 <button onclick="show_tag(this)" data-html="[{tag:'span',attr:{id:'test_result'}}]"
 data-scr="a1=/[helo]+|[dlorw]+|[\d\+]+/gi; a3='Hello \n world! _ 1+2'; document.getElementById('test_result').innerHTML = a3.match(a1).toSource();"
 >show</button>					
 				</li>
-				<li>..(выраж).. - сохранение в памяти под-выражения для установки вариантов, повторений, нумерация под-выражений по первой скобке (\1,\2,.. - повторное использование найденных подвыражений, RegExp.$1,RegExp.$2,..-чтение подвыражений после операции )
+				<li><c>(выраж)</c> - сохранение в памяти под-выражения для установки вариантов, повторений, нумерация под-выражений по первой скобке (<c>\1,\2,..</c> - повторное использование уже найденных подвыражений когда они повторяются, <c>RegExp.$1,RegExp.$2,..</c>-чтение подвыражений после операции )
 <button onclick="show_tag(this)" data-html="[{tag:'span',attr:{id:'test_result'}}]"
 data-scr="a1=/([helo]+)\s+([dlorw]+).{4}([\d\+]+)\2/gi; a3='Hello \n world! _ 1+2world'; document.getElementById('test_result').innerHTML = a3.match(a1).toSource()+'*'+RegExp.$1+'*'+RegExp.$2+'*'+ RegExp.$3+'*'+ RegExp.$4+'*';"
 >show</button>					
 				</li>
-				<li>..(?:выраж).. - отделение под-выражения для установки вариентов, повторений, но без нумерациии
+				<li><c>(?:выраж)</c> - отделение под-выражения для установки вариантов, повторений, но не сохраняются
 <button onclick="show_tag(this)" data-html="[{tag:'span',attr:{id:'test_result'}}]"
 data-scr="a1=/(?:[helo]+)\s+([dlorw]+).{4}([\d\+]+)\1/gi; a3='Hello \n world! _ 1+2world'; document.getElementById('test_result').innerHTML = a3.match(a1).toSource()+'*'+RegExp.$1+'*'+RegExp.$2+'*'+ RegExp.$3+'*'+ RegExp.$4+'*';"
 >show</button>					
 				</li>
-				<li>..(?=выраж)..  - проверяет наличие под-выражения, но оно не включено в найденное выражение и не сохранено
+				<li><c>(?=выраж)</c>  - проверяет наличие под-выражения, но оно не включено в найденное выражение и не сохранено
 <button onclick="show_tag(this)" data-html="[{tag:'span',attr:{id:'test_result'}}]"
 data-scr="a1=/([helo]+)\s+([dlorw]+).{4}([\d\+]+)(?=\2)/gi; a3='Hello \n world! _ 1+2world'; document.getElementById('test_result').innerHTML = a3.match(a1).toSource()+'*'+RegExp.$1+'*'+RegExp.$2+'*'+ RegExp.$3+'*'+ RegExp.$4+'*';"
 >show</button>					
 				</li>
-				<li>..(?!выраж)..  - проверяет отсутствиея под-выражени, но оно не включено в выборку
+				<li><c>(?!выраж)</c>  - проверяет отсутствиея под-выражени, но оно не включено в выборку
 <button onclick="show_tag(this)" data-html="[{tag:'span',attr:{id:'test_result'}}]"
 data-scr="a1=/([helo]+)\s+([dlorw]+).{4}([\d\+]+)(?!\.)\2/gi; a3='Hello \n world! _ 1+2world'; document.getElementById('test_result').innerHTML = a3.match(a1).toSource()+'*'+RegExp.$1+'*'+RegExp.$2+'*'+ RegExp.$3+'*'+ RegExp.$4+'*';"
 >show</button>					
@@ -3966,12 +3991,13 @@ data-scr="a1=/([helo]+)\s+([dlorw]+).{4}([\d\+]+)(?!\.)\2/gi; a3='Hello \n world
 </li>
 </li>
 <li><span class="my_b1"><c>Error</c> - объектный класс ошибок</span>
-		<ul hidden><li> конструкции для перехвата (нейтрализации) возникшей ошибки:<br>
-		<c>throw</c> <v>значение_ошибки</v> - способ искусственного создания ошибки (исключения - например new Error('строка об ошибке')) указанного типа для его перехвата<br>
-		<c>try{код}</c> - код с предполагаемой ошибкой или throw<br>
-		<c>catch(имя_перемен){код}</c> - код обработки полученного значения ошибки<br>
-		<c>finally{код}</c> - код выполняется всегда -</li>
-		<li>Типы ошибок: Error(базовый тип), EvalError, RangeError, ReferenceError, SyntaxError, TypeError и URIError - различные типы ошибок</li>
+		<ul hidden><li hd> конструкции для перехвата (нейтрализации) возникшей ошибки:<br>
+		<ul><li><c>try{код}</c> - код с предполагаемой ошибкой или с запуском throw
+		</li><li><c>catch(имя_перемен){код}</c> - код обработки полученного значения ошибки
+		</li><li><c>finally{код}</c> - код выполняется всегда -</li>
+		<li><c>throw</c> <v>значение_ошибки</v> - способ искусственного создания ошибки (исключения - например new Error('строка об ошибке')) указанного типа для его перехвата
+		</li></ul></li>
+		<li>Типы классов ошибок: Error(базовый тип), EvalError, RangeError, ReferenceError, SyntaxError, TypeError и URIError - различные типы ошибок</li>
 		<li c>new Error(["сообщение"]) - создание об ошибки для  throw/try/catch</li>
 		<li c>.message - строка сообщения переданное в Error/сформировано автоматически</li>
 		<li c>.name - строка типа ошибки</li>
@@ -3981,10 +4007,9 @@ data-scr="a1=/([helo]+)\s+([dlorw]+).{4}([\d\+]+)(?!\.)\2/gi; a3='Hello \n world
 
 <li><span class="my_b1"><c>XMLHttpRequest</c> - класс объекта Ajax-запросов по протоколу HTTP</span>
 		<ul hidden><li><c>new XMLHttpRequest</c>() - создание XHR-объекта  (для IE - ActiveXObject("Msxml2.XMLHTTP")/ActiveXObject("Microsoft.XMLHTTP")/для IE8,9 - XDomainRequest)</li>
-		<li>Подготовка XHR-объекта к запросу
+		<li hd>Подготовка XHR-объекта к запросу
 			<ul>
 			<li c>responseType - (load) установка типа ожидаемого ответа в response: "DOMString"-строка или HTML, "arraybuffer"-массив байтов, "blob"-двоичный,"Document"-xml,"json"-строка json</li>
-			<li>.<c>open</c>("GET/POST/HEAD","url-адрес",[true-асинхронно(ум)/false-синхронно],["логин","пароль"]) - настройка способа запроса на сервер этого докумета(кроме file:\\)</li>
 			<li c>.setRequestHeader("заголовок","значение") - установка заголовков запроса (но удалить его нельзя), например установка типа передаваемых данных ('Content-Type', 'application/json' / 'application/x-www-form-urlencoded' / 'multipart/form-data' / 'text/plain')</li>
 			<li c>.timeout - время в мс прекращения связи</li>
 			<li c>.withCredentials - установка true для передачи в запросе куков и авторизацию</li>
@@ -4000,15 +4025,15 @@ data-scr="a1=/([helo]+)\s+([dlorw]+).{4}([\d\+]+)(?!\.)\2/gi; a3='Hello \n world
 			<c>Access-Control-Request-Headers: перечень заголовков</c><br>
 			2.сервер читает заголовок и устанавливает заголовок ответа: <br>
 			<c>Access-Control-Allow-Method: метод</c><br>
-			<c>Access-Control-Allow-Headers: перечень разрешенных заголовков <br>
-			<c>Access-Control-Max-Age: N - количество секунд на которое запросы не будут требовать подтверждения <br>
-			
+			<c>Access-Control-Allow-Headers: перечень разрешенных заголовков</c> <br>
+			<c>Access-Control-Max-Age: N - количество секунд на которое запросы не будут требовать подтверждения </c><br>
 			</li>
 			</ul></li>
+		<li>.<c>open</c>("GET/POST/HEAD","url-адрес",[true-асинхронно(ум)/false-синхронно],["логин","пароль"]) - настройка способа запроса на сервер этого докумета(кроме file:\\)</li>			
 		<li>.<c>send</c>(null(или пусто)-GETзапроса/об_формы-POSTзапроса/json-строка_данных) - выполнение запроса на сервер и получение ответа<br>
 		синхронный - метод завершается при получении ответа (при долгом ответе - зависание)<br>
 		асинхронный - метод завершается сразу, а получение ответа проверяется в свойстве status</li>
-		<li>Проверка наличия ответа
+		<li hd>Проверка наличия ответа
 			<ul><li e>.onreadystatechange - установка ф-ии обработчика при изменении состояния запроса .readyState (устаревший метод)</li>
 			<li e>loadstart - начало запроса</li>
 			<li e>error/ .onerror - произошла ошибка</li>
@@ -4023,19 +4048,18 @@ data-scr="a1=/([helo]+)\s+([dlorw]+).{4}([\d\+]+)(?!\.)\2/gi; a3='Hello \n world
 			<li c>.statusText - текстовое сообщение об ошибке</li>
 			<li c>.abort() - отмена запроса не дожидаясь ответа(запускают в setTimeout() при долгих запросах)</li>
 			</ul></li>
-		<li>Получение ответа
+		<li hd>Получение ответа
 		<ul><li c>.responseText - получить ответ в виде строки текста (HTML - можно вставить в .innerHTML, JSON - преобразовать в объекты и массивы eval())</li>
 			<li c>.responseXML - получить ответ в виде об Document / XML-документа (если сервер указал  MIME-тип "text/xml"), можно сразу вставить в документ</li>
+			<li c>.response - (load) полученные д-е указанного типа</li>
 			<li c>.getAllResponseHeaders() - получить единую строку со всеми заголовками ответа</li>
 			<li c>.getResponseHeader("заголовок") - получить строку значения заголовка ответа</li>
-			
-			<li c>.response - (load) полученные д-е указанного типа</li>
 			</ul></li>
 		</ul>
 
 </li>
 <li><span class="my_b1"><c>Canvas</c> - объект для рисования на холсте (контекст экранной области - .<c>getContext</c>("2d"))</span>
-	<ul hidden><li>Свойства контекста
+	<ul hidden><li hd>Свойства контекста
 			<ul><li c>.canvas - ссылка об эл</li>
 			<li c>.getImageData(x,y,w,h) - получить часть изображения из координат в виде массива пикселей и значениями RGBA</li>
 			<li c>.putImageData(массив_рисунка_RGBA,x,y) - установить в холст изображение из  массива данных</li>
@@ -4056,7 +4080,7 @@ c.fillStyle = gr; c.fillRect(10, 10, 100, 100);"
 			<li><c>об_град.addColorStop</c>([0. - 1.],"цвет") - цвета точек перехода, где точка - от 0 до 1</li>
 			<li c>createPattern(об_изобр, repeat/repeat-x/repeat-y/no-repeat) - получить об CanvasPattern шаблон для заполнения цвета из изображения (повтор:repeat-[x/y] / no-repeat)</li>
 			</ul></li>
-		<li>Настройки контекста перед рисованием
+		<li hd>Настройки контекста перед рисованием
 			<ul><li>Настройка линий и способа закраски
 				<ul><li c>fillStyle - (цвет,градиент,изображение) способ закраски фигуры
 <button onclick="show_tag(this)" data-html="[{tag:'canvas',attr:{id:'test_result'}}]"
@@ -4112,7 +4136,7 @@ c.beginPath(); c.strokeStyle ='yellow'; c.globalAlpha=0.5; c.lineJoin='bevel'; c
 c.beginPath(); c.strokeStyle ='blue'; c.globalAlpha=0.3; c.lineJoin='miter'; c.moveTo(110,20); c.lineTo(200,50); c.lineTo(110,80); c.stroke();"
 >show</button>					
 				</li>
-				<li c>setLineDash([N-линия,N-разрыв,..]) - пара(чаще одна) для определения пунктирной линии, установка [] - сплошная
+				<li c>setLineDash([N-линия,N-разрыв,..]) - пара(чаще одна) для определения пунктирной линии, установка пустой [] - сплошная
 <button onclick="show_tag(this)" data-html="[{tag:'canvas',attr:{id:'test_result'}}]"
 data-scr="c=document.getElementById('test_result').getContext('2d');
 c.strokeStyle ='red'; c.lineWidth=10; c.setLineDash([10,10]);
@@ -4278,7 +4302,7 @@ data-scr="c=document.getElementById('test_result').getContext('2d');
 				<li c>setTransform(scale_x,наклон_x,наклон_y,scale_y,translate_x,translate_y)/transform(..) - матрица преобразования</li>
 				<li c>currentTransform - установка/чтение матрицы преобразования в виде об {a,b,c,d,e,f}</li></ul></li>
 		</ul></li>
-		<li>Рисование
+		<li hd>Рисование
 		<ul><li>Рисование готовых фигур
 			<ul><li c>fillRect(x,y,ширина,высота) - Рисует закрашенный прямоугольник
 <button onclick="show_tag(this)" data-html="[{tag:'canvas',attr:{id:'test_result'}}]"
@@ -4413,7 +4437,7 @@ c.lineWidth=10; c.font = '20px serif'; c.fillText('Text_Привет',100,50,50)
 			</li>
 			</ul></li>
 		</ul></li>	
-	<li>Эффекты
+	<li hd>Эффекты
 		<ul><li>.filter="none / ф-я1 ф-я2 .." - эффекты фильтром перечисляются через пробел
 			<ul><li>url('файл_SVG-фильтр') - подключение внешнего файла с SVG-фильтром</li>
 			<li>blur(N) - степень размывания фигуры/изображения</li>
@@ -4439,11 +4463,11 @@ c.lineWidth=10; c.font = '20px serif'; c.fillText('Text_Привет',100,50,50)
 		<li><c>XSLTProcessor</c> - класс объекта для преобразования XSL-документа (разновидност XML) в фрагмент DOM</li>
 		<li>(<c>new XMLSerializer</c>()).serializeToString(об_узел) - класс для сериализации XML-документ в строку(для IE - об_узел.xml)</li>
 		<li><c>new Image</c>([W,H]) - создание в кэше об изображения (свойство src - определяет файл из памяти для будущей вставки)</li>
-		<li>URL - об для формирование url
+		<li hd><c>URL</c> - об для формирования url
 			<ul><li>createObjectURL(об_Blob) - создание формата url для записи в свойство url тэга IMG</li>
 			<li>revokeObjectURL(..)</li></ul>
 		</li>
-		<li>File - объект хранится в массиве свойства .files об тэга INPUT type=file
+		<li hd><c>File</c> - объект хранится в массиве свойства .files об тэга INPUT type=file
 			<ul><li>.name - прочитать имя файла</li>
 			<li>.size - размер файла байт</li>
 			<li>.type - вычисленный MIME-тип файла, если неизвестен - ""</li>
@@ -4454,12 +4478,12 @@ c.lineWidth=10; c.font = '20px serif'; c.fillText('Text_Привет',100,50,50)
 			<li>.setRequestHeader("X-File-Size", file.fileSize);</li></ul>
 			</li>
 			</ul></li>
-		<li>BlobBuilder - класс бинарной строки 
+		<li hd><c>BlobBuilder</c> - класс бинарной строки 
 			<ul><li>new BlobBuilder() - об бинарной строки</li>
 			<li>.append(массив_байт) - добавление в конец масссива байт типа ArrayBuffer</li>
 			<li>.getBlob('имя_файла_изобр'/'MIME-тип') - записать файл из двоичного ф-ла</li>
-			<li></li><li></li><li></li><li></li><li></li></ul></li>
-		<li>FileReader - класс для чтения об File/часть файла в память в асинхронном режиме с хоста (не с локального диска)
+			</ul></li>
+		<li hd><c>FileReader</c> - класс для чтения об File/часть файла в память в асинхронном режиме с хоста (не с локального диска)
 			<ul><li>new FileReader - создание об для чтения информации из об Fileфайла/Blob-часть файла</li>
 			<li>readAsBinaryString(Blob/об_File) - чтение ф-ла в бинарном режиме - строка байтов</li>
 			<li>readAsText(Blob/об_File, ["кодировка"]) - чтение ф-ла в текстовом режиме с указанной кодировкой (ум - UTF-8)</li>
@@ -4474,7 +4498,7 @@ c.lineWidth=10; c.font = '20px serif'; c.fillText('Text_Привет',100,50,50)
 				<li>abort - при отмене считывания</li>
 				</ul></li>
 			</ul></li>
-		<li> FormData - класс данных формы (формирует все д-е формы в виде одного об)
+		<li hd><c>FormData</c> - класс данных формы (формирует все д-е формы в виде одного об)
 			<ul><li>new FormData([об_формы]) - создание об пустой/с данными формы для передачи ajax</li>
 			<li>append("имя_св",значен) - добавление новых полей со значениями любого типа</li>
 			<li>delete("имя_св") - удаление свойства</li>
@@ -4483,7 +4507,7 @@ c.lineWidth=10; c.font = '20px serif'; c.fillText('Text_Привет',100,50,50)
 			<li>has("имя_св") - проверка наличия свойства</li>
 			<li>set("имя_св",значен) - установка нового значения</li>
 			</ul></li>
-		<li>WebSocket класс создания непрерывной связи с сервером online, обмен тектовыми сообщениями (для дополнения отсутствующих функций - Web-socket-js)
+		<li hd><c>WebSocket</c> - класс создания непрерывной связи с сервером online, обмен тектовыми сообщениями (для дополнения отсутствующих функций - Web-socket-js)
 			<ul><li>new WebSocket("ws://или"wss://..[IP/имя_серв]..[:порт]") - получить об соединения (по ум порт - 80, закодир порт - 443)</li>
 			<li>onopen - обработчик при подключении к серверу</li>
 			<li>onmessage - обработчик при получении сообщения (ф-я(d), d-полученные текстовые данные)</li>
@@ -4491,7 +4515,7 @@ c.lineWidth=10; c.font = '20px serif'; c.fillText('Text_Привет',100,50,50)
 			<li>send(данные) - передача текстовых данных серверу</li>
 			<li>close() - закрытие соединения</li>
 			</ul></li>
-		<li>EventSource - класс регулярного прослушивания сервера по событиям (при обрыве сервером - само восстанавливается)
+		<li hd><c>EventSource</c> - класс регулярного прослушивания сервера по событиям (при обрыве сервером - само восстанавливается)
 			<ul><li>сервер:
 				<ul><li>должен готовить заголовок: "Content-type:text/event-stream"</li>
 				<li>все сообшения передаются online в формате:
@@ -4508,7 +4532,7 @@ c.lineWidth=10; c.font = '20px serif'; c.fillText('Text_Привет',100,50,50)
 			<li>onerror - обработчик при ошибках, ф-я(об_соб), где об_соб.eventPhase - состояние (константа EventSource.CLOSED/.CONNECTING/.OPEN)</li>
 			<li>close() - обрыв связи клиентом</li>
 			</ul></li>
-		<li>postMessage() - фунукция сообщения между скриптами разных доменов загруженных в окона,вкладки,фреймовы одного браузера
+		<li hd><c>postMessage()</c> - фунукция сообщения между скриптами разных доменов загруженных в окона,вкладки,фреймовы одного браузера
 			<ul><li>postMessage("сообщение", "http-запрос на сервер") - отправка сообщения скрипту на другой сервер</li>
 			<li>window.onmessage - обработчик при получении д-х чужого сервера, ф-я(об_соб), где об_соб
 				<ul><li>.origin - строка URL-домен откуда пришло сообщение (для организации фильтра)</li>
@@ -4516,7 +4540,7 @@ c.lineWidth=10; c.font = '20px serif'; c.fillText('Text_Привет',100,50,50)
 				<li>.source - об Window окна откуда пришло сообщение</li>
 				</ul></li>
 			</ul></li>
-		<li>AudioContext - класс асинхронного воспроизведения истосников данных (файл/поток)
+		<li hd><c>AudioContext</c> - класс асинхронного воспроизведения истосников данных (файл/поток)
 			<ul><li>new AudioContext() - создание об_AudioContext</li>
 			<li> decodeAudioData(об_ArrayBuffer,ф-я_успех(об_декодир_д-х),ф-я_ошибка()) - асинхронное декодирование д-х источника</li>
 			<li>.createBufferSource() - получить пустой об данных для манипуляции
@@ -4533,17 +4557,17 @@ c.lineWidth=10; c.font = '20px serif'; c.fillText('Text_Привет',100,50,50)
 			<li>.currentTime - текущее время воспроизведения</li>
 			<li></li><li></li><li></li>
 			</ul></li>
-		<li>navigator.[moz/webkit]GetUserMedia() - функция для захвата потоков аудио и видео WebRTC
+		<li hd><c>navigator.[moz/webkit]GetUserMedia()</c> - функция для захвата потоков аудио и видео WebRTC
 			<ul><li>.[moz/webkit]GetUserMedia({audio:true,video:true},ф-я_удача(об_поток),ф-я_неудача(об_ошибка))</li>
 			<li>об_поток - необходимо преобразовать в url и установить в об_video.src: об_video.src=URL.createObjectURL(об_поток)</li>
 			</ul></li>
-		<li>RTCPeerConnection - класс для звязи потоков 
+		<li hd><c>RTCPeerConnection</c> - класс для звязи потоков 
 			<ul><li>new RTCPeerConnection({"имя_сервера":[{"url":"адрес сервера"}]}) - создание об 1-го учасника</li>
 			<li>об_RTC.addStream(об_поток) - подключение потока к об</li>
 			<li>об_RTC.createOffer() - (1-й)создание соединения для подключения 2-го учасника</li>
 			<li>об_RTC.createAnswer() - (2-й)подтверждение соединения 2-го учасника</li>
 			</ul></li>
-		<li>Worker - класс запуска JavaScript-программ в фоновом процессе
+		<li hd><c>Worker</c> - класс запуска JavaScript-программ в фоновом процессе
 			<ul><li>new Worker('имя_модуля.js') - запуск модуля, получить об_мод</li>
 			<li>об_мод.message("сообщ") - отправка запущенному модулю сообщения</li>
 			<li>об_мод.onmessage - обработчик при получении сообщения от фонового модуля,в ф-я(об_соб), об_соб.data-сообщение</li>
@@ -4558,7 +4582,7 @@ c.lineWidth=10; c.font = '20px serif'; c.fillText('Text_Привет',100,50,50)
 				</ul>
 			</li>
 			</ul></li>
-		<li>SharedWorker - класс запуска JavaScript-программ в фоновом процессе используют другие окна
+		<li hd><c>SharedWorker</c> - класс запуска JavaScript-программ в фоновом процессе используют другие окна
 			<ul><li>new SharedWorker('имя_модуля.js') - запуск модуля, получить об_мод</li>
 			<li>об_мод.port.start() - запуск процесса создателем</li>
 			<li>об_мод.port.message("сообщ") - отправка запущенному модулю сообщения</li>
@@ -4598,20 +4622,23 @@ c.lineWidth=10; c.font = '20px serif'; c.fillText('Text_Привет',100,50,50)
 	<li><v>лог</v> <c>?</c> <v>выражение1</v> <c>:</c> <v>выражение2</v> - если условие == true, то вычисляется и возвращается значение выражения1, иначе вычисляется и возвращается значение выражения2</li>
 	<li><c>with</c> (<v>объект</v>) <v>инсрукция</v> - выполнение кода при наличии объекта в текущем контексте</li>
 	</ul></li>
-
-	<li hd>Циклы
-	<ul>
-	<li><c>while</c>(<v>лог</v>) <v>инсрукция</v> - циклическое выполнение инструкции пока условие == true</li>
-	<li><c>do</c> <v>инсрукция</v> <c>while</c>(<v>лог</v>) - выполнение инструкции, после проверка условия, если условие == true повторяется цикл</li>
-	<li><c>for</c>(<v>инициал</v>;<v>лог</v>;<v>инкремент</v>) <v>инсрукция</v> - после первоначальной инициализации проверяется условие, если условие == true, выполняется инструкция и потом инкремент, цикл повторяется с проверки условия </li>
-	<li><c>for</c>(<v>имя_переменная</v> <c>in</c> <v>объект</v>) <v>инсрукция</v> - перечисление всех свойств объекта и выполнение инструкции, в которой имя_переменная содержит название свойства</li></ul></li>
-	<li><c es>for</c>(<v>имя_переменная</v> <c>of</c> <v>массив/итератор</v>) <v>инсрукция</v> - перечисление всех элементов массива и выполнение инструкции, в которой имя_переменная содержит индекс/итератор/ключ ассоц массива</li></ul></li>
+	
 	<li hd>Безусловные переходы
 	<ul>
 	<li><c>goto</c> <v>имя_метки</v>, где далее    <v>имя_метки</v>: <v>инсрукция</v> - переход на блок имеющий метку который может находиться в любом месте</li>
 	<li><c>break</c>[ <v>имя_метки</v>] - выход из текущего [имеющего метку блока] в его конец</li>
 	<li><c>continue</c>[ <v>имя_метки</v>] - завершение иттерации текущего [имеющего метку цикла]</li>
 	</ul></li>
+	
+	<li hd>Циклы
+	<ul>
+	<li><c>while</c>(<v>лог</v>) <v>инсрукция</v> - циклическое выполнение инструкции пока условие == true</li>
+	<li><c>do</c> <v>инсрукция</v> <c>while</c>(<v>лог</v>) - выполнение инструкции, после проверка условия, если условие == true повторяется цикл</li>
+	<li><c>for</c>(<v>инициал</v>;<v>лог</v>;<v>инкремент</v>) <v>инсрукция</v> - после первоначальной инициализации проверяется условие, если условие == true, выполняется инструкция и потом инкремент, цикл повторяется с проверки условия </li>
+	<li><c>for</c>(<v>имя_переменная</v> <c>in</c> <v>объект</v>) <v>инсрукция</v> - перечисление всех свойств объекта и выполнение инструкции, в которой имя_переменная содержит название свойства</li>
+	<li><c>for</c>(<v>имя_переменная</v> <c>of</c> <v>массив/итератор</v>) <v>инсрукция</v> - перечисление всех элементов массива и выполнение инструкции, в которой имя_переменная содержит индекс/итератор/ключ ассоц массива</li>
+	</ul></li>
+
 	<li>Модуль.js файл модуля:var Модуль={}; Модуль.св1=function(..){..} - создание файла-модуля со своей областью видимости, функции (без this) </li>
 	<li hd>Динамическое создание страниц
 	<ul>
@@ -4643,7 +4670,7 @@ c.lineWidth=10; c.font = '20px serif'; c.fillText('Text_Привет',100,50,50)
 		<ol>
 		<li><h>SCRIPT src="ejs.js"</h><h>/SCRIPT</h> - создает об: ejs</li>
 		<li>получение об данных для шаблона об_д-х={..}</li>
-		<li>пепеменная со строкой шаблона: шаблон=".."</li>
+		<li>переменная со строкой шаблона: шаблон=".."</li>
 		<li>ejs.render(шаблон, об_д-х) - получить HTML-строку</li>
 		</ol>
 	</li>	
@@ -5096,10 +5123,10 @@ data-scr="window.ondevicelight=function(e){alert('ondevicelight');};"
 	</li>		
 	<li hd><c>document</c> - ссылка на об документа Document главного фрейма (имеет потомоков:1-Element,остальные - другие )
 	<ul><li c>.defaultView - ссылка на об Window текущего документа</li>
-		<li c>.documentElement - ссылка на корневой элемент всего докумета (для html - HTML,xml - корень)</li>
-		<li c>.body - ссылка на эл BODY</li>
 		<li c>.doctype - ссылка на узел типа документа класса DocumentType  - тэг !DOCTYPE</li>
-		<li c>.head - ссылка эл зпголовка HEAD</li>
+		<li c>.documentElement - ссылка на корневой элемент всего докумета (для html - HTML,xml - корень)</li>
+		<li c>.head - ссылка эл заголовка HEAD</li>
+		<li c>.body - ссылка на эл BODY</li>
 		<li c>.title - название текущего документа в тэге TITLE, позволяет записывать</li>
 		<li c>.activeElement - активный элемент в текущий момент, имеющий фокус ввода</li>
 		<li c>.forms - массив об Form - всех тэгов FORM документа,каждый содержит массив elements с объектами элементов ввода</li>
@@ -5150,15 +5177,15 @@ document.getElementById('test_result').innerHTML = a.map((x)=>'document.'+x+' = 
 		</li>
 		
 		<li c>.hasFocus(об_эл) - проверка наличия фокуса</li>
-		<li c>.write("строка"),.writeln("строка")(для pre) - запись строки в текущий HTML-документ и последующий разбор (до завершения загрузки документа)</li>
 		<li c>.open()/.close() - открытие/закрытие разбора HTML-текста в новом окне (после создания нового окна)</li>
+		<li c>.write("строка"),.writeln("строка")(для pre) - запись строки в текущий HTML-документ и последующий разбор (до завершения загрузки документа)</li>
 		<li>Выборки об-элементов
 			<ul><li c>.getElementById("ID") - получить один эл с аттрибутом id="ID"/неудача null(для XML применяют при типе !DOCTYPE id)</li>
 			<li c>.getElementByTagName[NS](["простр_имен"/null],"ТЭГ/тэг/*") - массив об указанных тэгов [с пространством имен] /неудача - []</li>
 			<li c>.getElementByName("имя") - массив об с аттрибутом name="имя" (для HTML) /неудача - []</li>
+			<li c>.getElementsByClassName("имя_класса") - (html5)массив об имеющие класс</li>
 			<li c>.querySelector("селектор") - (html5)получение одного эл по селектору</li>
 			<li c>.querySelectorAll("селектор") - (html5)массив об по селектору</li>
-			<li c>.getElementsByClassName("имя_класса") - (html5)массив об имеющие класс</li>
 			</ul>
 		</li>
 
@@ -5201,7 +5228,7 @@ document.getElementById('test_result').innerHTML=document.cookie;"
 		</li>
 		<li c>.async - true(ум)/false признак асинхронной(обработчик onload) загрузки (при создании об Document - createDocument() )</li>
 		<li c>.load("URL-документа") - выполнение загрузки нового докуметна HTML/XML формата любым протоколом методом GET (при создании об Document - createDocument() )</li>
-		<li c>.onload - оработчик загрузки в асинхронном режиме документа</li>
+		<li c>.onload - обработчик загрузки в асинхронном режиме документа</li>
 		<li>Тэг <h>XML</h> в документе содержат XML-данные - отображаютя, их надо скрывать стилем xml{display:none;}</li>
 		<li>Фабрики для создания новых узлов,элементов
 			<ul><li c>.createTextNode("текст") - создание нового текстового узла</li>
@@ -5266,7 +5293,7 @@ document.getElementById('test_result').innerHTML=document.cookie;"
 
 <h3 class="my_b1">Объект узлов и элемента</h3>
 <div hidden>
-<ul><li>Параментры всех узлов
+<ul><li hd>Параментры всех узлов
 	<ul><li hd><c>nodeType</c> - (N) тип узла соответствуют константам
 			<ul><li> 1 - ELEMENT_NODE</li>
 			<li> 2 - ATTRIBUTE_NODE</li>
@@ -5292,7 +5319,7 @@ document.getElementById('test_result').innerHTML=document.cookie;"
 	<li c>normalize() - удаление у потомков пустых и объединение смежных текстовых узлов (после манипуляций)</li>
 	</ul>
 </li>
-<li>Перемещение по иерархии узлов(между элементами находятся текстовые узлы)/элеменов
+<li hd>Перемещение по иерархии узлов(между элементами находятся текстовые узлы)/элеменов
 			<ul><li c>ownerDocument - ссылка на об Document текущего узла</li>
 			<li c>childNodes / children - массив всех дочерних узлов/элементов</li>
 			<li c>hasChildNodes() - проверка наличия дочерних узлов/элементов</li>
@@ -5312,7 +5339,7 @@ document.getElementById('test_result').innerHTML=document.cookie;"
 			<li c>insertAjacentText('положение','строка') - вставка простой строки в указанное место относительно текущего эл: beforebegin - до элемента, afterbegin - перед первым дочерним, beforeend - после последнего дочернего, afterend - после элемента</li>
 			<li c>insertAjacentElement('положение',об_эл) - вставка об_эл в указанное место относительно текущего эл: beforebegin - до элемента, afterbegin - перед первым дочерним, beforeend - после последнего дочернего, afterend - после элемента</li>
 			<li c>contains(об_эл) - проверка указанного узла является потомком для текущего независомо от уровня</li>
-			<li hd><c>compareDocumentPosition(об_эл)</c> - определение местоположения указанного узла к текущему, возврщает сисло
+			<li hd><c>compareDocumentPosition(об_эл)</c> - определение местоположения указанного узла к текущему, возврщает число
 				<ul>Константы об Node
 				<li>1 - DOCUMENT_POSITION_DISCONNECTED</li>
 				<li>2 - DOCUMENT_POSITION_PRECEDING</li>
@@ -5329,7 +5356,7 @@ document.getElementById('test_result').innerHTML=document.cookie;"
 			</ul>
 </li>
 
-	<li>Набор свойств с характеристиками области элемента
+	<li hd>Набор свойств с характеристиками области элемента
 		<ul><li c>offsetLeft,offsetTop,offsetWidth,offsetHeight - вычесленные местоположение и размеры элемента
 <button onclick="show_tag(this)" data-html="[{tag:'div',attr:{id:'test_result'},in:'aaa'}]"
 data-scr="var a=['offsetLeft','offsetTop','offsetWidth','offsetHeight'], a1=document.getElementById('test_result');
@@ -5383,7 +5410,7 @@ data-scr="document.getElementById('test_result').innerHTML = document.getElement
 	<li c>.matches("селектор") - проверка на соответствие селектору</li>
 	<li c>.selectNodes()/selectSingleNode() (для IE) - выполнение XPath-запроса</li>
 	<li c>.transformNode()/transformNodeToObject() (для IE) - применение XSLT-стилей</li>
-	<li>Свойства установленные как аттриуты тэга (кроме XML)
+	<li hd>Свойства установленные как аттриуты тэга (кроме XML)
 		<ul>
 		<li c>id - имя
 <button onclick="show_tag(this)" data-html="[{tag:'div',attr:{id:'test_result',title:'ok',name:'name1',class:'aaa bb'}}]"
@@ -5407,11 +5434,11 @@ a1.innerHTML = a.map((x)=>'об_эл.'+x+' = '+(x in a1? a1[x]:' значени�
 		<li c>contentEditable - превращает текстовый элемент в редактируемое поле </li>
 		<li c>spellcheck - для редактируемых полей проверка грамматики</li>
 		</ul></li>
-	<li>Свойства и методы работы с аттриутами
+	<li hd>Свойства и методы работы с аттриутами
 		<ul><li c>hasAttributes() - true/false проверка что узел - элемент и наличие аттрибутов</li>
-		<li c>hasAttribute[NS](["простр_имен"/null],"имя_аттр") - true/false проверка наличиz аттрибута</li>
-		<li c>getAttribute[NS](["простр_имен"/null],"имя_аттр"),setAttribute[NS](["простр_имен"/null],"имя_аттр","знач"),removeAttribute[NS](["простр_имен"/null],"аттр") - чтение,установка,удаление аттрибутов</li>
-		<li c>getAttributeNode[NS](["простр_имен"/null],"имя_аттр"),setAttributeNode[NS](об_Attr),removeAttributeNode(["простр_имен"/null],об_Attr) - получить,установка,удаление об Attr</li>
+		<li c>hasAttribute[NS](["простр_имен"/null],"имя_аттр") - true/false проверка наличия аттрибута</li>
+		<li c>getAttribute[NS](["простр_имен"/null],"имя_аттр"), setAttribute[NS](["простр_имен"/null],"имя_аттр","знач"), removeAttribute[NS](["простр_имен"/null],"аттр") - чтение,установка,удаление аттрибутов</li>
+		<li c>getAttributeNode[NS](["простр_имен"/null],"имя_аттр"), setAttributeNode[NS](об_Attr), removeAttributeNode(["простр_имен"/null],об_Attr) - получить,установка,удаление об Attr</li>
 		<li c>getAttributeNames() - получить массив с именами всех аттрибутов</li>
 		<li><c>attribures</c> - массив всех аттрибутов об Attr(есть свой интерфейс), Attr имеет сойства:
 			<ul><li c>name - получить строку имени аттрибута</li>
@@ -5424,20 +5451,21 @@ a1.innerHTML = a.map((x)=>'об_эл.attributes['+a2+'].'+x+' = '+(x in a1.attri
 >show</button>			
 			</li></ul>
 		</li></ul></li>
-	<li>CSS-стили тэгов
-		<ul><li c>style.имя_стиля/style[имя_стиля] - получить/установить один стиль для этого тэга в виде строки (свойство cssFloat - стиль float)</li>
-		<li c>style.cssText - получить/установить все стили для этого тэга одной строкой</li>
-		<li c>window.getComputedStyle(об_эл,"псевдо"/null).имя_стиля/.currentStyle.имя_стиля(для IE) - вычислить и прочитать все стили для этого элемента</li>
-		</ul></li>
-	<li hd>classList - массив классов в аттрибуте class, имеет интерфейс
+	<li hd><c>classList</c> - массив классов в аттрибуте class, имеет интерфейс
 		<ul><li c>.add('имя_класса'/масс_класс) - добавление одного/несколько классов</li>
 		<li c>.remove('имя_класса'/масс_класс) - удаление одного/несколько классов</li>
 		<li c>.item(N) - получить класс по номеру</li>
 		<li c>.toggle('имя_класса',[true/false]) - установка или удаление класса, второй аргумент превращает в метод add/remove</li>
 		<li c>.contains('имя_класса') - проверка наличия класса</li>
 		<li c>.replace('стар_имя_класса','нов_имя_класса') - замена класса на новый</li>
-		</ul></li>		
-	<li>Возможности перетаскивания эл (HTML5) - аттрибут draggable
+		</ul></li>				
+	<li hd>CSS-стили тэгов
+		<ul><li c>style.имя_стиля/style[имя_стиля] - получить/установить один стиль для этого тэга в виде строки (свойство cssFloat - стиль float)</li>
+		<li c>style.cssText - получить/установить все стили для этого тэга одной строкой</li>
+		<li c>window.getComputedStyle(об_эл,"псевдо"/null).имя_стиля/.currentStyle.имя_стиля(для IE) - вычислить и прочитать все стили для этого элемента</li>
+		</ul></li>
+
+	<li hd>Возможности перетаскивания эл (HTML5) - аттрибут draggable
 		<ul>
 		<li>События при перетаскивании
 			<ul><li><e>dragstart</e> - начало перетаскивания об,ф-я(об_соб),об_соб.originalEvent.dataTransfer имеет свойства для установки
@@ -5462,7 +5490,7 @@ a1.innerHTML = a.map((x)=>'об_эл.attributes['+a2+'].'+x+' = '+(x in a1.attri
 			</ul>
 		</li></ul></li>
 		
-		<li>Возможности копирования и вставки буффера обмена
+		<li hd>Возможности копирования и вставки буффера обмена
 			<ul><li>События 
 				<ul><li><e>beforecopy</e>  - перед копированием,ф-я(об_соб),об_соб.originalEvent.clipboardData (для IE - window.clipboardData) имеет свойства для установки
 					<ul><li c>setData('MIME-тип','значение') - запись в эл любых д-х с типом (text/plain - простой текст,text/html - строка html,	text/uri-list - текст адреса,DownloadURL-указание файла с передачей значеия "MIME-тип:имя_файла:путь")</li></ul></li>
@@ -5477,7 +5505,7 @@ a1.innerHTML = a.map((x)=>'об_эл.attributes['+a2+'].'+x+' = '+(x in a1.attri
 			</li></ul></li>
 
 <li>Обработчики событий
- <ol><li>в виде аттрибутов, получают строку-код и присваивает свойству .on имя_события =function(..){код},код внедряется в метод элемента (this-об_элем)
+ <ol><li hd>в виде аттрибутов тэга, получают строку-код и присваивает свойству .on имя_события =function(..){код},код внедряется в метод элемента (this-об_элем)
 		<ul><li e>.onerror - (аналог try/catch)обработчик всех ошибок (body) т.к. по умолчанию они игнорируются(где функция(перем-сообщение_о_ошике,перем-имя_файла_с_ошибкой,перем-N_строки_с_ошибкой),возврат true-обработка завершена)</li>
 		<li e>onabort/onerror - при обрыве/ошибке загрузки изоражения (img)</li>
 		<li e>onfocus / onblur - получение/потеря фокуса (button,input,label,select,textarea,body) </li>
@@ -5491,14 +5519,14 @@ a1.innerHTML = a.map((x)=>'об_эл.attributes['+a2+'].'+x+' = '+(x in a1.attri
 		<li e>onlosecapture(для IE) - после setCapture() при появлении системного соощения и прерывании перехвата мыши</li>
 		</ul></li>
 	<li>В виде свойства эллемента <c>.on имя_события</c> = функция - установка объекту свойства функции-обработчика события (аналогично в аттрибуте), возврат false отменяет действие по умолчанию</li>
-	<li>События в три этапа 1-перехват от Document к узлу(у IE после setCapture()), 2-в узле, 3-всплытие от узла к Document
+	<li hd>События в три этапа 1-перехват от Document к узлу(у IE после setCapture()), 2-в узле, 3-всплытие от узла к Document
 		<ul><li><c>эл.addEventListener</c>("имя_события",функция(об_событ),true/false-перехват/в узле или всплытие) - установка объекту обработчика события(<c>attachEvent</c>("on имя_события",функция())-для IE),this - об_элем регистрации </li>
 		<li><c>эл.removeEventListener</c>("имя_события",функция(об_событ),true/false) - удаление у объекта обработчика события(<c>detachEvent</c>("on имя_события",функция())-для IE),безымянную ф-ю удалить нельзя</li>
-		<li>Создание искусственного события
+		<li hd>Создание искусственного события
 			<ul><li c>document.createEvent("HTMLEvents/MouseEvents/UIEvents")/ document.createEventObject() (для IE) - искусственное создание об события</li>
 			<li c>об_событ.initEvent("имя_событ"-стандарт/любое , true/false-всплыт , true/false-отмен ум)/.initUIEvent(..)/.initMouseEvent(..много) - инициализация об события(кроме IE)</li>
 			<li c>эл.dispatchEvent(об_событ), где об_событ=new Event('имя_событ')/ эл.fireEvent("on имя_событ",об_событ)  - немедленная генерация искусственного события в узле (для установки в очередь - setTieout())</li></ul></li>
-		<li>Типы событий
+		<li hd>Типы событий
 			<ul><li e>abort,error - остановка действия, ошибка</li>
 			<li e>focus,blur - получение/потеря </li>
 			<li e>change - выполнено изменение д-х</li>
@@ -5511,7 +5539,7 @@ a1.innerHTML = a.map((x)=>'об_эл.attributes['+a2+'].'+x+' = '+(x in a1.attri
 			<li e>DOMAttrModified, DOMCharacterDataModified, DOMNodeInserted, DOMNodeInsertedIntoDocument, DOMNodeRemoved, DOMNodeRemovedFromDocument, DOMSubtreeModified  - </li>
 			<li e>keypress/keydown/keyup - клавиша нажата/отпущена</li>
 			</ul></li>
-		<li>Свойства объекта события в функции обработчике (один аргумент обработчика/ window.event или event-для IE)
+		<li hd>Свойства объекта события в функции обработчике (один аргумент обработчика/ window.event или event-для IE)
 			<ul><li c>.stopPropagation() - остановка распространения события</li>
 			<li c>.сancelBubble (для IE) - установка true отключает всплытие</li>
 			<li c>.preventDefault() - отменяет действие по умолчанию</li>
@@ -5536,10 +5564,10 @@ a1.innerHTML = a.map((x)=>'об_эл.attributes['+a2+'].'+x+' = '+(x in a1.attri
 			</ul></li>
 		</ol></li>
 	
-	</ul></li>
+	
 
 
-<li>Свойства об текстового/комментария узла
+<li hd>Свойства об текстового/комментария узла
 	<ul><li c>.data - строка текста является узлом</li>
 	<li c>.length - длина строки</li>
 	<li c>.appendData("строка")/insertData(N-нач,"строка") - вставка в конец/позицию N подстроки</li>
@@ -5547,7 +5575,7 @@ a1.innerHTML = a.map((x)=>'об_эл.attributes['+a2+'].'+x+' = '+(x in a1.attri
 	<li c>.substringData(N-нач,N-длина) - получение подстроки</li>
 	<li c>splitText(N) - разбивает текст узла до позиции и с позиции, возвращает ссылку на второй</li></ul>
 </li>
-<li>Свойства об тэга FORM
+<li hd>Свойства об тэга FORM
 	<ul><li c>.elements - массив всех элементов формы(кроме LABEL)</li>
 	<li c>.имя_элемента - об-элемент с аттрибутом name="имя_элемента" (элементы с одинаковым именем помещаются в массив)</li>
 	<li c>length / elements.length - кличество элементов в форме	
@@ -5555,7 +5583,7 @@ a1.innerHTML = a.map((x)=>'об_эл.attributes['+a2+'].'+x+' = '+(x in a1.attri
 	<li c>.onsubmit/.onreset/.submit()/.reset() - обработчики(return false - отменяет методы ум) и методы по ум запроса на сервер/сброс значений элементов</li>
 	</ul>
 </li>
-<li>Свойства об-элементов формы
+<li hd>Свойства об-элементов формы
 	<ul><li c>type - строка типа элемента (в INPUT - значение аттрибута, в textarea,select-one,select-multiple,button - имя тэга)</li>
 	<li c>form - ссылка на об тэга FORM, в котором содержится элемент</li>
 	<li><c>value</c> (кроме BUTTON,SELECT - в OPTION) - аттрибут, значение элемента, передается на сервер (текст INPUT и TEXTAREA/текст на кнопке),у file - для чтения</li>
@@ -5569,7 +5597,7 @@ a1.innerHTML = a.map((x)=>'об_эл.attributes['+a2+'].'+x+' = '+(x in a1.attri
 	<li c>alt - (для image) текст если эл не отображается</li>
 	<li c>tabIndex - порядок обхода при TAB</li>
 	<li c>htmlFor (для LABEL) - аттрибут for, указана строка id  </li>
-	<li><c>validity</c> - ссылка на об ValidityState проверки валидности поля, при предусмотренной проверке аттр (об_эл.willValidaty==true)
+	<li hd><c>validity</c> - ссылка на об ValidityState проверки валидности поля, при предусмотренной проверке аттр (об_эл.willValidaty==true)
 		<ul><li c>badInput - ошибка не правильного типа</li>
 		<li c>customError - проверка вызова ошибки пользователя методом об_эл.setCustomValidity('сообщ'), очистка с сообщ ""</li>
 		<li c>patternMismatch - проверка правильного заполнения (при наличии pattern)</li>
@@ -5605,7 +5633,7 @@ a1.innerHTML = a.map((x)=>'об_эл.attributes['+a2+'].'+x+' = '+(x in a1.attri
 		<li c>new Option([меню],[значение],[true-defaultSelected],[true-selected]) - создание</li>
 		<li c>add(об_Option,об_Option-перед/null)/remove(N) - (для SELECT) добавление перед указанным или в конец/удаление</li>
 		<li c>index - получить индекс элемента</li>
-		<li c>selectedIndex - (для SELECT) индекс выранного элемента (не multiple)</li>
+		<li c>selectedIndex - (для SELECT) индекс выбранного элемента (не multiple)</li>
 		<li c>selected - (для OPTION) признак выбранного элементы меню (для multiple)</li>
 		<li c>text - (для OPTION) строка меню</li>
 		<li c>defaultSelected - (для OPTION) признак установки аттрибута selected</li>
@@ -5614,17 +5642,17 @@ a1.innerHTML = a.map((x)=>'об_эл.attributes['+a2+'].'+x+' = '+(x in a1.attri
 		<li c>length/options.length - количество меню</li>
 		</ul></li>
 </ul></li>
-<li>Свойства об-элементов текстовых полей
+<li hd>Свойства об-элементов текстовых полей
 		<ul><li c>required - проверка не пустого поля</li>
 		<li c>readOnly - запрет изменения</li>
 		<li c>placeholder - строка при пустом поле</li>
 		<li c>pattern - проверка сответствия рег.выражению</li>
 		<li c>defaultValue - (для input,textarea) первоначальное значение записаное в HTML</li>
 		</ul></li>
-	<li>Свойства об-элементов числового поля
+	<li hd>Свойства об-элементов числового поля
 		<ul><li c>min/max - аттриуты наименшее/наибольшее значение</li>
 		<li></li></ul></li>
-<li>Свойства об-элементов Image изображения
+<li hd>Свойства об-элементов Image изображения
 		<ul><li c>src - URL-адрес изображения (при записи нового - загружает и заменяет)</li>
 		<li e>onload/onerror/onabort - обработчик при окончании/ошибке/прерывание загрузки изображения в память</li>
 		<li c>complete - true после процесса загрузки - после событий (onload/onerror/onabort)</li>
@@ -5635,21 +5663,21 @@ a1.innerHTML = a.map((x)=>'об_эл.attributes['+a2+'].'+x+' = '+(x in a1.attri
 		
 		</ul></li>
 <li>Map - карта, контейнер для гиперссылок</li>
-<li>Свойства об-элементов Link гиперссылки, кнопка карты (A,AREA)
+<li hd>Свойства об-элементов Link гиперссылки, кнопка карты (A,AREA)
 	<ul><li c>href,protocol,host,hostname,port,pathname,search,hash - строка запроса</li>
 	<li c>accessKey,charset,hreflang,rel,rev,tabIndex,target,type - свойства-аттрибуты</li>
 	<li c>coords,shape - (для AREA) свойства-аттрибуты</li>
 			</ul>
 </li>
 
-<li>Свойства об типа документа DocumentType	(чаще применяют для XML)
+<li hd>Свойства об типа документа DocumentType	(чаще применяют для XML)
 	<ul><li c>internalSubset - строка внутреннего подмножества - в скобках []</li>
 	<li c>name - строка имя типа - после !DOCTYPE</li>
 	<li c>publicId - строка открытого внешнего подмножества</li>
 	<li c>systemId - строка системного внешнего подмножества</li>
 	</ul>
 </li>
-<li>Свойства об таблицы
+<li hd>Свойства об таблицы
 	<ul><li c>caption,tHead,tFoot,tBodies-масс -  (для TABLE)	 ссылки на об-эл талицы</li>
 	<li c>border,cellPadding,cellSpacing,frame,rules,width,summary - (для TABLE) свойства-аттрибуты</li>
 	<li c>[create/delete][THead/TFoot/Caption]() - (для TABLE) создание/удаление об контейнера шапки/итогов/заголовка</li>
@@ -5660,7 +5688,7 @@ a1.innerHTML = a.map((x)=>'об_эл.attributes['+a2+'].'+x+' = '+(x in a1.attri
 	</ul>
 </li>
 
-<li>Свойства об-элементов AUDIO/VIDEO
+<li hd>Свойства об-элементов AUDIO/VIDEO
 	<ul><li c>controls - true/false признак</li>
 	<li c>src - файл ресурса</li>
 	<li c>currentTime - сек, текущая позиция воспроизведения</li>
@@ -5863,11 +5891,11 @@ data-scr="var a=$('#test_result')[0].appendChild($('<span>AAAA</span>')[0]);" >s
 			<ul><b>об_аттриб</b>
 			<li s>имя_аттриб:значение - установка значения аттрибута
 <button onclick="show_tag(this)" data-html="[{tag:'ul',in:[{tag:'li',in:''},{tag:'li',in:''},{tag:'li',attr:{id:'test_result'},in:''},{tag:'li',in:''}]}]"
-data-scr="var a=$('#test_result')[0].appendChild($('<span>AAAA</span>')[0]);" >show</button>				
+data-scr="var a=$('#test_result')[0].appendChild($('<input>',{value:'ddd'})[0]);" >show</button>				
 				</li>
 			<li s>css:{свойство_css1:знач1,свойство_css2:знач2,..} - установка стилей css
 <button onclick="show_tag(this)" data-html="[{tag:'ul',in:[{tag:'li',in:''},{tag:'li',in:''},{tag:'li',attr:{id:'test_result'},in:''},{tag:'li',in:''}]}]"
-data-scr="var a=$('#test_result')[0].appendChild($('<span>AAAA</span>',{css:{color:'red'}})[0]);" >show</button>				
+data-scr="var a=$('#test_result')[0].appendChild($('<input>',{value:'ww',css:{color:'red'}})[0]);" >show</button>				
 				</li>
 			<li s>имя_событ:ф-я() - установка обработчика собития
 <button onclick="show_tag(this)" data-html="[{tag:'ul',in:[{tag:'li',in:''},{tag:'li',in:''},{tag:'li',attr:{id:'test_result'},in:''},{tag:'li',in:''}]}]"
@@ -6007,7 +6035,7 @@ data-scr="var a=$('#test_result>li').is('#test_result>li:eq(2)'); alert(a);" >sh
 data-scr="var a=$('#test_result>li').map(function(){return this.innerHTML}).get(); alert(a);" >show</button>				
 					</li>
 				<li c>each(ф-я) - обход всех эл обертки для выполнения ф-ии (this-эл ф-я(N,об_эл) )
-<button onclick="show_tag(this)" data-html="[{tag:'ul',attr:{id:'test_result'},in:[{tag:'li',in:''},{tag:'li',in:''},{tag:'li',in:''},{tag:'li',in:''}]}]"
+<button onclick="show_tag(this)" data-html="[{tag:o'ul',attr:{id:'test_result'},in:[{tag:'li',in:''},{tag:'li',in:''},{tag:'li',in:''},{tag:'li',in:''}]}]"
 data-scr="var m=[],a=$('#test_result>li').each(function(){m.push(this.innerHTML);this.innerHTML='a'}); alert(m);" >show</button>				
 					</li>
 				<li c>data(нов_имя_св,["знач"]) - сохранение/получение нового св-ва эл-та(эл-т играет роль хранилища д-х любого типа), когда д-х нет - undefined</li>
@@ -7580,7 +7608,7 @@ data-scr="$('#test_out').prev().on('click',function(e){$('#test_out div:first').
 		
 		<br>после загрузки скрипта, angular ищет директиву ng-app (если ее нет - для запуска надо выполнить скрипт angular.bootstrap(об_эл) )
 		<ul><li c>angular - единый об содержащий все ф-ии и методы</li>
-		<li hd><c>angular.module("имя_модуля_html",масс_имен_связан_модулей/[],[ф-я_настр(..)])</c> - создание об_модуля пользователя для внедрения(<h a>ТЭГ ng-app="имя_модуля_html"</h>), позволяет добавлять настройки,контроллеры и др., может иметь зависимость(расширение текущего модуся возможностями другого) от других дочерних модулей(тогда службы дочерних модулей доступны друг-другу и родителю, которые можно добавить в аргумент службы), все элементы можно ствить в цепочку и регистрировать не не однократно (в случае применения минификации скрипта: ф-ии с зависимостями надо записать массивом - [$служ1,$служ2,..ф-я($служ1,$служ2,..)])
+		<li hd><c>angular.module("имя_модуля_html",масс_имен_связан_модулей/[],[ф-я_настр(..)])</c> - создание об_модуля пользователя для внедрения(<h a>ТЭГ ng-app="имя_модуля_html"</h>), позволяет добавлять настройки,контроллеры и др., может иметь зависимость(расширение текущего модуля возможностями другого) от других дочерних модулей(тогда службы дочерних модулей доступны друг-другу и родителю, которые можно добавить в аргумент службы), все элементы можно ставить в цепочку и регистрировать не однократно (в случае применения минификации скрипта: ф-ии с зависимостями надо записать массивом - [$служ1,$служ2,..ф-я($служ1,$служ2,..)])
 			<ul><li c>об_модуля.config(ф-я_настр(..)) - (фаза настройки провайдера) настройка фабрики или служб ф-ей конфигурации (или выполнить ее в module)</li>
 			<li c>об_модуля.controller("имя_контр_html",['$scope',..,ф-я($scope)]) - установка для модуля ф-ии-контроллера обычно выполняет инициализацию об $scope, где $scope - автоматически создается фабрикой Scope.$new()</li>
 			<li c>об_модуля.constant("имя_конст",значен) - создание константы модуля</li>
@@ -7600,14 +7628,16 @@ data-scr="$('#test_out').prev().on('click',function(e){$('#test_out div:first').
 				<li s>terminal:true - запрещение компиляции других дирректив с низким приоритетом до компиляции этой</li>
 				<li s>link:ф-я(перем_scope, перем_element, перем_attrs, [перем_ngModelController]) - связывает диррективу с контекстом (добавление ф-ий в контекст)
 					<ul><b>св-ва перем_ngModelController</b>
-					<li>.$viewValue - значение хранимое в модели</li>
+					<li>.$viewValue - значение отображаемое в элементе</li>
+					<li>.$modelValue - значение хранимое в модели, может отличаться от $viewValue зависимо от ф-ии $parser()</li>
+					<li>.$parsers - массив ф-ий, последовательно преобразующих значение для передачи его в модель</li>
 					<li>.$setViewValue(значение) - ф-я для передачи значения в модель (из эл)</li>
 					<li>.$render - ф-я для автоматического отображения значения в эл (значение из модели)</li>
 					<li>перем_scope.перем=.. - добавление в область видимости новой переменной</li>
 					<li>перем_scope.имя_функц=.. - добавление в область видимости новой функции</li>
 					<li></li></ul>
 				</li>
-				<li s>template:"html-шаблон" - строка разметки применяемая для диррективы, может использовать диррективу ng-transclude для указания места вставки контенма указанного в текущей диррективе</li>
+				<li s>template:"html-шаблон" - строка разметки применяемая для диррективы, может использовать диррективу ng-transclude для указания места вставки контента указанного в текущей диррективе</li>
 				<li s>templateUrl:"ф-л" - ф-л с разметкой применяемая для диррективы, загружаемый асинхронно</li>
 				<li s>replace:true/false - замена(с копированием атрибутов)/нет(шалон добавляется) всего текущего эл на шаблон</li>
 				<li s>transclude:false/true/'element' - нет/использует текущее содержимое контента/весь элемент для шаблона,ф-ии компиляции (как в директиве ng-repeat копируется весь эл и содержимое текущ эл), добавляет в свойстве compile 3-й аргумент функцию</li>
@@ -7629,7 +7659,7 @@ data-scr="$('#test_out').prev().on('click',function(e){$('#test_out div:first').
 					<li>$transclude - доступом к ф-ии включения содержимого с уже добавленным контекстом, для получения об_эл=$transclude()</li></ul>
 				</li>
 				<li s>controllerAs:'имя' - псевдоним имени контроллера, чтобы обращаться с более удобным именем</li>
-				<li s>require:"[префикс]имя_диррективы/массив_дирректив" - применение для передачи контроллера/массив_контроллеров другой диррективы (например ngModel) этого эл для передачи в 4-й аргумент ф-ии link (например об ngModuleController)
+				<li s>require:"[префикс]имя_контроллера/массив_имен_контроллеров" - применение для передачи контроллера/массив_контроллеров другой диррективы (например ngModel) этого эл для передачи в 4-й аргумент ф-ии link (например об ngModuleController)
 					<ul>возможные префиксы, которые можно объединять
 					<li>? - не обязательное присутствие контроллера(например ?имя_диррективы, тогда при отсутствии диррективы 4-й эл получит null)</li>
 					<li>^ - получение контроллера из родительских эл с указанным именем директивы</li></ul>
@@ -7643,6 +7673,7 @@ data-scr="$('#test_out').prev().on('click',function(e){$('#test_out div:first').
 				<li>перем_element - обертка элемента</li>
 				<li>перем_attrs - об_аттрибутов: {имя_атр1:знач1,..}</li></ul>
 	</li>
+			<li><c>об_модуля.component</c>("имя_дир", об_директив ) - компонент как упрощенная форма директивы, заменяет директиву-элемент на шаблон</li>
 			<li><c>об_модуля.filter</c>("имя_фильтр",фабр_ф-я(){return ф-ия(об,[арг1,арг2,..]){..return знач_ответ}}) - фабрика фильтра получает об [с аргументами], возвращает после обработки знач_ответ</li>
 
 			</ul>
@@ -7693,7 +7724,7 @@ data-scr="$('#test_out').prev().on('click',function(e){$('#test_out div:first').
 		<li c>.forEach(об/масс,ф-ия(key,value)[, ОВ]) - выпол.ф-ии [внутри ОВ] для всех эл об/масс</li>
 		<li c>.fromJson("JSON-строка") - (де-сериализация) получить об из JSON-строки</li>
 		<li c>.toJson(об[, pretty]) - (сериализация) получить JSON-строку из об</li>
-		<li c>.identity() - получить первое аргумент ф-ии (запускается в ф-ии)</li>
+		<li c>.identity() - получить первый аргумент ф-ии (запускается в ф-ии)</li>
 		<li c>.injector("имя_модуль"/масс_имен_модулей) - получить ф-ию-ижектор ($injectop) для получения доступа к об служб</li>
 		<li hd>Ф-ии проверки типа
 			<ul><li c>.isArray(знач) - t/f проверка значения - масс</li>
@@ -7733,11 +7764,16 @@ data-scr="$('#test_out').prev().on('click',function(e){$('#test_out div:first').
 			<li c>.$broadcast('имя_событ') - генерация события контексту вниз по иерархии (к дочернему)</li>
 			<li><c>.$on('имя_событ',ф-я)</c> - установка обработчика события, где ф-я - function(об_событ,[арг1,арг2,..]){}</li>
 				<ul><li c>об_событ.stopPropagation() - (для $emit) остановка распространения </li>
-				<li c>об_событ.preventDefault() - отмена установленного для события ф-ии по умолчанию</li></ul>
+				<li c>об_событ.preventDefault() - отмена установленного для события ф-ии по умолчанию</li>
+				<li c>об_событ.defaultPrevented() - возвращает true если уже была вызвана preventDefault()</li>
+				<li c>об_событ.name - имя пойманого событи</li>
+				<li c>об_событ.currentScope - возвращает ссылку на текущий $scope, где поймано событие</li>
+				<li c>об_событ.targetScope - возвращает ссылку на $scope, откуда было отправлено событие через $emit или $broadcast</li>
+				</ul>
 			<li hd>Восходящие NG-событие(от родителя к дочерним)
-				<ul><li e>'$includeContentRequested' - </li>
-				<li e>'$includeContentLoaded' - при загрузке контента (ng-include, ng-view)</li>
-				<li e>'$viewContentLoaded' - </li></ul>
+				<ul><li e>'$includeContentRequested' - при запросе на загрузку контента (ng-include, ng-view)</li>
+				<li e>'$includeContentLoaded' - при загрузке контента (ng-include)</li>
+				<li e>'$viewContentLoaded' - при загрузке контента (ng-view)</li></ul>
 			</li>
 			<li hd>Нисходящее NG-событие (от дечернего к родителю)
 				<ul><li e>'$locationChangeStart' - </li>
@@ -7757,7 +7793,9 @@ data-scr="$('#test_out').prev().on('click',function(e){$('#test_out div:first').
 				<li e>'$destroy' - перед удалением ОВ и его дочерних ОВ</li></ul></li>
 		<li></li>
 		<li c>.$watch("выраж"/ф-я (возвращаемый результат), ф-ия_обраб([newValue, oldValue]), true(сравнение всех св-в об)/false(ум)) - регистрация наблюдателя на каждом цикле с обработчиком при изменении выраж, возвращает ф-ю запускаемую для удаления этого наблюдателя</li>
+		<li c>.$watchCollection("массив"/"объект"/ф-я (возвращаемый результат), ф-ия_обраб([newValue, oldValue]) ) - регистрация наблюдателя на каждом цикле с обработчиком при изменении массива/св-в объекта, возвращает ф-ю запускаемую для удаления этого наблюдателя</li>
 		<li c>.$digest() - принудительный вызов наблюдателей watcher (список установленных $watch()) текущего и дочерних контекстов и обработка очереди событий $evalAsync (применяют для тестов)</li>
+		<li c>.$evalAsync(ф-я) - установка в очередь выполнения ф-ю, аналог $timeout(ф-я,0) </li>
 		<li c>.$id - св-во, уникальный номер ОВ (применяют для отладки)</li>
 		<li><c>.$apply(ф-я())</c> - запуск ф-ии для изменений в контексте и принудительная проверка $watch() всех контекстов и обработка их событий $digest()
 			<ol>причины автоматического вызова .$apply():
@@ -7793,11 +7831,16 @@ data-scr="$('#test_out').prev().on('click',function(e){$('#test_out div:first').
 			</li>
 		<li hd><c>$httpBackend</c> - для имитации в тестах низкоуровневый сервис работы с XMLHttpRequest исправляет несовместимости бр-ов, использована в $http или $resouce (может быть применена в текстах для подмены на var-переменную)
 			<ul>
+			<li c>.expect('метод','url-адрес',[об-данных],[об-загол] ) - имитация ожидаемого запрса методом GET/POST/DELETE/PUT/..</li>
+			<li c>.expectXXX('url-адрес',[об-данных],[об-загол]) - имитация ожидаемого запрса GET/POST/DELETE/PUT/JSONP..</li>
+			<li c>.when('метод','url-адрес',[об-данных],[об-загол] ) - имитация ожидаемого запрса методом GET/POST/DELETE/PUT/..</li>
 			<li c>.whenXXX('url-адрес') - имитация ожидаемого запрса GET/POST/DELETE/PUT/..</li>
-			<li c>.respond(ответ) - имитация ожидаемого ответа</li>
+			<li c>.respond([код-ответ],ответ,[об-заголовок]) - имитация ожидаемого ответа: 200,ответ</li>
+			<li c>.respond(ф-я) - имитация ожидаемого ответа в функции:return 200,ответ,[об-заголовок]</li>
 			<li c>.flush() - запуск имитации запроса (whenXXX) и ответа (respond)</li>
 			<li c>.verifyNoOutstandingExpectation() - проверка на выполнение всех запросов и ответов</li>
 			<li c>.verifyNoOutstandingRequest() - проверка что запросы и ответы выполнены только ожидаемые</li>
+			<li c>.resetExpectations() - очистка всех установленных ожиданий</li>
 			</ul></li>
 		<li hd><c>$http(об_настр)</c> - служба как универсальная ф-я связи с сервером в виде ф-ии, выполняющая запросы XHR и JSONP
 					<ul>об_настр
@@ -7807,7 +7850,7 @@ data-scr="$('#test_out').prev().on('click',function(e){$('#test_out div:first').
 				<li s>headers: - дополнительные заголовки запроса</li>
 				<li s>data:"стр_д-х"/об_д-х - передаваемые данные, (об_д-х автоматически преобразуются в JSON, кроме св-в начинающиеся с $, обойти это можно применив JSON.stringify)</li>
 				<li s>timeout:N - мс длительность ожидания отсвета</li>
-				<li s>cache: - управление кэшированием запроса</li>
+				<li s>cache:true/имя_ячейки - управление кэшированием запроса (первый ответ сохраняется в памяти и второй запрос не получаем из памяти) </li>
 				<li s>transformRequest:ф-я() - ф-я обработки данных перед запросом</li>
 				<li s>transformResponse:ф-я() - ф-я обработки полученных данных после запроса</li>
 				<li s>withCredentials:  - </li>
@@ -7830,6 +7873,7 @@ data-scr="$('#test_out').prev().on('click',function(e){$('#test_out div:first').
 				<li hd>содержание об_ответ
 					<ul><li c>data - об полученных д-х после ф-ии де-сериализации</li>
 					<li c>status - N-число - код ответа 200-299 успех, 300-500 неудача</li>
+					<li c>statusText - строка ответа с описанием кода ответа</li>
 					<li c>headers - ф-ия выдающая значен заголовка: headers("имя_зогол")</li>
 					<li c>config - об настроек создания запроса</li>
 					</ul>
@@ -7885,7 +7929,7 @@ factory('myres',function($resource){return $resource('/mongodb/:x',{},{update:{m
 				</li>
 				<li><c>.delete/.remove</c>(об_д-х_перем,ф-я_удач(),ф-я_ошиб()) - запуск запроса через $http.delete()</li>
 				</ul></li>
-			<li>Мемоды одного об созданного фабрикой (об=new Фабр() ), возвращающей $resource()
+			<li>Методы одного об созданного фабрикой (об=new Фабр() ), возвращающей $resource()
 				<ul>
 				<li c>об.$save() - запуск запроса через $http.post() с передачей об_д-х в теле запроса POST/PUT</li>
 				<li c>об.$delete() - запуск запроса через $http.delete()</li>
@@ -7937,7 +7981,7 @@ return def.promise;}  };})"
 			</ul>
 		</li>		
 		<li><c>$timeout</c>(ф-я[, N-задерж][, true(ум)/false- отмена вызова apply()]) - обертка для window.setTimeout, предпочтительнее т.к. обновляет DOM с помощью $apply()</li>
-		<li c>$timeout.flush) - переход к следующему циклу, запускает $timeout при отсутствии задержки</li>
+		<li c>$timeout.flush - переход к следующему циклу, запускает $timeout при отсутствии задержки</li>
 		<li c>$timeout.cancel(promise) - отмена вып. ф-ии возвр t если задача не выполн</li>
 
 		<li c>$filter("имя_фильтра")(об,[арг1,арг2,..]) - служба (для внедрения ф-ии фильтра в любой модуль или применение в других фильтрах) поиска зарегистрированого фильтра и применения вне html [с аргументами]</li>
@@ -7999,6 +8043,7 @@ controller('mr',function($scope,$routeParams){ $scope.pr='Pete';$scope.you=$rout
 				<li c>redirectTo:"путь" - перезапуск пути заново по умолчанию (ни один путь не совпал)</li>
 				<li c>controller:"имя_контр" - установка по маршруту собственного контроллера для шаблона, создающий новый нонтекст</li>
 				<li c>resolve:{имя1:ф-я1,имя2:ф-я2,..} - вычисление всех функций с асинхронными зависимостями (ф-я(асинхр_завис1,..){..return знач}), после их успешных выполнений (при ошибке - маршрут не отображается, а адрес остается) будет отображен маршрут (значения прем могут быть преданы в контроллер для внедрения как зависимости)</li>
+				<li c>reloadOnSearch:true/false - перезагрузка страницы при не найденного пути </li>
 				<li c>пользов_св-во1:знач1 - добавление пользовательских св-в (можно сохранить ссылку на шаблон и подключить в ng-include как $route.current.пользов_св-во1)</li>
 				</ul>
 			</li>
@@ -8039,6 +8084,17 @@ controller('mr',function($scope,$routeParams,$route){ $scope.pr='Pete';$scope.yo
 			</ul>
 		</li>
 		<li c>ui-router - модуль системы работы с вложенными маршрутами (есть версии для angular_1.x, angular_2+, React)</li>
+		<li><c>$cacheFactory</c> - слжужба для хранения в памяти , чтобы не загружать шаблоны повторно, они сохраняются в памяти (для безопасности неоходимо удалять шаблоны имеющие доступ к конфид.инф.), это об хранит ключ-"путь\ф-л_шаблон", значен-текст шаблона
+			<ul>
+			<li c>.create("имя",[об_настр]) - создание в памяти именной ячейки, возвращает об_кэша</li>
+			<li c>об_кэша.info() - возврвщает имя, размер, об_настр</li>
+			<li c>об_кэша.put("ключ","значение") - запись информации в кэш</li>
+			<li c>об_кэша.get("ключ") - получить значение из кэша по ключу</li>
+			<li c>об_кэша.remove("ключ") - удалить значение из кэша по ключу</li>
+			<li c>об_кэша.removeAll() - удалить все значения из кэша</li>
+			<li c>об_кэша.destroy() - удалить кэш</li>
+			</ul>
+		</li>
 		<li><c>$templateCache</c> - кэш хранит HTML-шаблоны, чтобы не загружать шаблоны повторно, они сохраняются в памяти (для безопасности неоходимо удалять шаблоны имеющие доступ к конфид.инф.), это об хранит ключ-"путь\ф-л_шаблон", значен-текст шаблона
 			<ul><li c>.put("путь\ф-л_шалон","текст шаблона") - предварительная запись нового шаблона в кэш без применения тега script (для непосредственной записи в шаблон надо экранировать кавычки:\' или \")</li>
 			</ul>
@@ -8063,7 +8119,7 @@ controller('mr',function($scope,$routeParams,$route){ $scope.pr='Pete';$scope.yo
 
 		<li c> $interpolate("html-строка с {{перем}}") - служба (применяется в диррективах и выражениях интерполяции) интерполяции принимает строку с наличием "{{перем}}", возвращает ф-ю(контекст) принимающая контекст и возвращающая строку с значениями из контекста</li>
 
-		<li hd>Интернационализация
+		<li hd>Интернационализация1
 			<ul><li><c>$locale</c> - служба содержит константы форматов и названий для отображения даты, времени, чисел, валюты (ngLocale - модуль зависимости, необходимо подключение скрипта "/i18n/angular-locale-язык-страна.js", ум- 'en-us')
 				<ul><li c>.id - получить строку с кодировкой подключенной локали в виде: "язык_страна"</li>
 				<li hd><c>.DATETIME_FORMATS</c> - об содержит массивы слов используемых в форматах даты и времени фильтра date
@@ -8099,11 +8155,38 @@ controller('mr',function($scope,$routeParams,$route){ $scope.pr='Pete';$scope.yo
 			</li>
 			</ul>
 		</li>
+		<li hd>Интернационализация2 (создание своего словаря)
+			<ul>
+			<li><c>$translate</c> - служба содержит константы форматов и названий для отображения даты, времени, чисел, валюты (pascalprecht.translate - модуль зависимости, необходимо подключение скрипта "angular-translate.js")
+</li>
+			<li>$translateProvide.translations('язык',{ключ1:'значение1',..}) - составление словаря на разных языках</li>
+			<li>$translateProvide.preferredLanguage('язык') - первоначальный язык</li>
+			<li>$translate.uses('язык') - переключение языка</li>
+			<li>{{ 'ключ' | translate }} - отображение </li>
+
+			</ul>
+		</li>
 		<li><c>$parse</c> - служба для связывания эл ввода с моделью (применен в модуле ngModel)
 			<ul><li c>$parse(об_диррект_эл)(контекст) - ф-я чтения из контекста (для передачи в эл: el.text())</li>
 			<li c>$parse(об_диррект_эл).assign(контекст, значение) - ф-я записи в контекст (при событии "input" и получения значения из элемента el.val())</li>
 			</ul>
 		</li>
+		<li><c>$sce</c> - служба для защиты контента от внедрения пасного кода
+			<ul>
+			<li c>getTrusted(тип,'строка') / getTrusted[тип]('строка') - </li>
+			<li c>parseAs(тип,'строка') / parseAs[тип]('строка') - </li>
+			<li c>trustAs(тип,'строка') / trustAs[тип]('строка') - </li>
+			<li>Типы
+				<ul>
+				<li>$sce.HTML</li>
+				<li>$sce.CSS</li>
+				<li>$sce.URL</li>
+				<li>$sce.RESOURCE_URL</li>
+				<li>$sce.JS</li>
+				</ul>
+			</li>
+			</ul>
+		</li>		
 		<li c>$exceptionHandler - служба выдачи сообщения об ошибках на консоль</li>
 		<li c>$controller(имя_контроллера,{$scope:об_контекст}) - получение модели указанного контроллера для тестирования (об_контекст - новый контекст $rootScope.$new() или дочерний )</li>
 		<li hd><c>$event</c> - служба-событие переданное в ф-ю-обработчик событий
@@ -8157,7 +8240,10 @@ data-angular="angular.module('App',[]).controller('cntr',function($scope){$scope
 				<li c>$index - N индекс эл.массива/счетчик свойств об (можно применить $index%2 для чередования класса)</li>
 				<li c>$first - true/false признак первого эл.масс</li>
 				<li c>$middle - true/false признак эл.масс не первого и не последнего</li>
-				<li c>$last - true/false признак последнего эл.масс</li></ul>
+				<li c>$last - true/false признак последнего эл.масс</li>
+				<li c>$even - true/false признак четного эл.масс</li>
+				<li c>$odd - true/false признак не четного эл.масс</li>
+				</ul>
 <button onclick="show_tag(this)" data-html="[{tag:'div',attr:{'ng-init':'aaa=[11,22,33,44]'},in:[
 {tag:'ul',in:{tag:'li',attr:{'ng-repeat':'x in aaa'},in:'Вы ввели: {{x}} под номером {{$index}} первый-{{$first}}'}}]}]"
 data-angular="angular.module('App',[])"
@@ -8202,7 +8288,9 @@ data-angular="angular.module('App',[]).controller('cntr',function($scope){$scope
 data-angular="angular.module('App',[])"
 >show</button>				
 			</li>
-			<li><h a>ТЭГ ng-include="JS_выраж_строки_файл" / " 'html-файл' " / "лог.выраж&&'html-файл1' || 'html-файл2' " / "id_шаблона"</h> - вычисление строки с html-файлом для загрузки его в содержание контента, добавляет новый контекст 
+			<li><h a>ТЭГ ng-include="JS_выраж_строки_файл" / " 'html-файл' " / "лог.выраж&&'html-файл1' || 'html-файл2' " / "id_шаблона"</h> - вычисление строки с html-файлом для загрузки его в содержание контента, добавляет новый контекст </li>
+			<li>app.config(function($sceDelegateProvider){$sceDelegateProvider.resourceUrlWhitelist([путь1,...] )  }  ) - добавление пути из другого сервера для разрешения доступа</li>
+			
 			<li><h a>ng-include src="выраж_строки_файл / id_шаблона"</h> - заменяется весь тэг, работает так же как directive()</li>
 			<li><h a>ТЭГ ng-view</h> - подставление в контент значения от маршрутизатора $routeProvider, такая дирректива может быть одна</li>
 			<li><h a>ng-view</h><h a>/ng-view</h> - подставление в контент значения от маршрутизатора $routeProvider, такая дирректива может быть одна</li>
@@ -8235,10 +8323,16 @@ data-angular="angular.module('App',[]).controller('cntr',function($scope){$scope
 			<li><h a>ТЭГ ng-keyup="NG ф-я"</h>  - выраж/ф-я(..,[$event]) контекста при отпускании нажатой кнопки</li>
 			<li><h a>ТЭГ ng-keypress="NG ф-я"</h>  - выраж/ф-я(..,[$event]) контекста при нажатии и отпускании любой кнопки</li>
 			<li><h a>ТЭГ ng-change="NG ф-я"</h>  - выраж/ф-я(..,[$event]) контекста при изменении модели, запускается вместе с ng-model </li>
+			<li><h a>ТЭГ ng-focus="NG ф-я"</h>  - выраж/ф-я(..,[$event]) контекста при получении фокуса </li>
+			<li><h a>ТЭГ ng-blur="NG ф-я"</h>  - выраж/ф-я(..,[$event]) контекста при потере фокуса </li>
+			<li><h a>ТЭГ ng-paste="NG ф-я"</h>  - выраж/ф-я(..,[$event]) контекста при вставке </li>
+			<li><h a>ТЭГ ng-cut="NG ф-я"</h>  - выраж/ф-я(..,[$event]) контекста при вырезании </li>
+			<li><h a>ТЭГ ng-copy="NG ф-я"</h>  - выраж/ф-я(..,[$event]) контекста при копировании</li>
 <b>вставка переменные в аттрибуты</b>			
 			<li><h a>a ng-href="путь с вставкой {{перем}}"</h>..<h>/a</h> - гипер ссылка с динамическим путем</li>
 			<li><h a>a ng-href="выражение"</h>..<h>/a</h> - гипер ссылка с вычисляемым путем</li>
 <b>интерполяция - отображение значения выражения(связывание от модели к отображению)</b>
+			<li><h a>ТЭГ ng-attr-имя_аттр="{{выражение}}"</h><h a>/ТЭГ</h>  - внедрение интерполяции {{}} в значении аттрибута</li>
 			<li><h a>ТЭГ ng-bind="выражение[|фильтры]"</h><h a>/ТЭГ</h>  - (желательный к применению) эквивалент привязки {{}}, но занимает весь эл, более эфективный</li>
 			<li><h a>ТЭГ ng-bind-html-unsafe="выражение"</h><h a>/ТЭГ</h>  - эквивалент привязки {{}}, без экранирования уголков - создает тэг </li>
 			<li><h a>ТЭГ ng-bind-html="выражение"</h><h a>/ТЭГ</h>  - эквивалент привязки {{}}, без экранирования уголков - создает тэг (необходимо подключить скрипт angular-sanitize.js и в модуль добавить службу "ngSanitize")</li>
@@ -8493,15 +8587,118 @@ data-angular="angular.module('App',[]).controller('cntr',function($scope){$scope
 			
 			</ul>
 		</li>	
+
+		<li>Анимация
+			<ul><li>script type="text/javascript" src="...angular-animate.js" - подключение библиотеки для добавления дополнительных классов во время анимации
+				<ul>Дополнительные классы создаваемые по названиям событий: ng-[событ],  ng-[событ]-active 
+				<li>ngRepeat - enter, leave, move</li>
+				<li>ngView - enter, leave</li>
+				<li>ngInclude - enter, leave</li>
+				<li>ngSwitch - enter, leave</li>
+				<li>ngIf - enter, leave</li>
+				<li>ngClass / class= - add, remove</li>
+				<li>ngShow - add, remove</li>
+				<li>ngHide - add, remove</li>
+				</ul>			
+			</li>
+			</ul>
+		</li>
+		<li>Мобильные устройства
+			<ul>
+			<li>script type="text/javascript" src="...angular-touch.js" - подключение библиотеки для добавления дополнительных сервисов
+				<ul><b>Диррективы событий</b>
+				<li>ng-swipe-right='выражение' - при сдвиге вправо</li>
+				<li>ng-swipe-left='выражение' - при сдвиге влево</li>
+				</ul>		
+				<ul><b>Программирование событий сервиса $swipe с функцией bind()</b>
+				<li>start - начало касания, передает начальные координаты {x:N,y:N}, далее его перехватывает событие mousedown или touchstart</li>
+				<li>move - движение с касанием, передает дельту движения {x:N,y:N}, далее его перехватывает событие mousemove или touchmove</li>
+				<li>end - остановка движения и отрыв пальца, передает дельту движения {x:N,y:N}, далее его перехватывает событие mouseup или touchend</li>
+				<li>cancel - завершение, далее его перехватывает событие touchcancel</li>
+				</ul>					
+			</li>
+			<li>script type="text/javascript" src="...angular-gestures.js" - подключение библиотеки для добавления дополнительных сервисов мультикасанием, перетягивание, щипок, наклон экрана				
+			</li>			
+			</ul>
+		</li>		
 		<li hd>Тестирование
 			<ul><li><h a>script type="text/javascript" src="...angular-mocks.js"</h> <h>/script</h> - подключение библиотеки только для тестирования</li>
 			</ul>
-		
-		</li>
+		</li>		
 		</ul>
 	</div>	
 
-<h3 class="my_b1">Angular 2 / TypeScript - фреймверк для создания приложений (подобен AngularJS 1.x)</h3>
+<h3 class="my_b1">lineman - готовое приложение на AngularJS</h3>
+	<div hidden>
+	<ul>
+	<li c>git clone https://github.com/davemo/lineman-angular-template.git имя-app - клонировать всю систему каталогов и файлов используя git</li>
+    <li c>cd имя-app - перейти в созданный каталог</li>
+	<li c>npm install - установка зависимых программ с помощью npm в папку node_modules</li>
+	<li c>авмоматически будет запущена команд bower install - установка зависимых программ с помощью bower в папку app/bower_components</li>
+	<li c>lineman run - запуск приложения, которое запускает локальный web-сервер http://localhost:8000/app/index.html</li>
+	</ul>
+	</div>
+
+	<h3 class="my_b1">angular-seed - готовое приложение на AngularJS</h3>
+	<div hidden>
+	<ul>
+	<li c>git clone https://github.com/angular/angular-seed.git - клонировать всю систему каталогов и файлов используя git</li>
+    <li c>cd angular-seed - перейти в созданный каталог</li>
+	<li c>npm install - установка зависимых программ с помощью npm в папку node_modules</li>
+	<li c>авмоматически будет запущена команд bower install - установка зависимых программ с помощью bower в папку app/bower_components</li>
+	<li c>npm start - запуск приложения, которое запускает локальный web-сервер http://localhost:8000/app/index.html</li>
+	<li hd>тестирование<ul>
+	<li c>npm test - запуск всех Jasmine-тестов установленых в папке test/unit/ с настройкой karma-runner в файле test/karma.conf.js</li>
+	<li c>npm run имя_теста - запуск одного ф-ла Jasmine-теста</li>
+	</ul></li>
+	<li hd>Обновление
+	<ul>
+	<li c>npm upbate - обновление зависимых модулей записанных в package.json</li>
+	<li c>bower upbate - обновление зависимых модулей записанных в bower.json</li>
+	<li c>npm run update-index-async - асинхронное обновление </li>
+	</ul>
+	</li>
+	<li></li>
+	</ul>
+	</div>	
+
+	
+<h3 class="my_b1">Yeoman - генержатор приложения на AngularJS</h3>
+	<div hidden>
+	<ul>
+    <li c>npm i -g yo - установка оболочки</li>
+    <li c>npm i -g generator-angular - установка генератора</li>
+    <li c>mkdir имя-app - создать каталог</li>
+    <li c>cd имя-app - перейти в созданный каталог</li>
+	<li c>yo angular - запуск генератора приложения с вопросами создания сервисов, директив, контроллеров, фильтров</li>
+	<li c>grunt server - запуск сервера</li>
+	<li c>grunt test - запуск теста</li>
+	<li c>grunt build - создание выходного файла</li>
+	<li c>yo angular:route имя-маршрута - создание одного маршрута</li>
+	<li c>yo angular:controller имя-контроллера - создание контроллера</li>
+	<li c>yo angular:directive имя-диррективы - создание диррективы</li>
+	<li c>yo angular:filter имя-фильтра - создание фильтра</li>
+	<li c>yo angular:view имя - создание </li>
+	<li c>yo angular:provider имя - создание </li>
+	<li c>yo angular:factory имя - создание </li>
+	<li c>yo angular:servise имя - создание </li>
+	<li c>yo angular:value имя - создание </li>
+	<li c>yo angular:constant имя - создание </li>
+	<li c>yo angular:decorator имя - создание </li>
+Ключи в конце установки
+	<li c>--minsafe - минификация</li>
+	<li c>--skip-add - добавление скрипта в index.html</li>
+	<li c> - </li>
+
+	</ul>
+	</div>		
+	
+
+	
+	
+	
+	
+<h3 class="my_b1">Angular 2-6 / TypeScript - фреймверк для создания приложений (подобен AngularJS 1.x)</h3>
 	<div hidden>
 	<ul>
 	<li hd>Установка модулей фреймверка
@@ -8863,7 +9060,7 @@ System.config({
 		<li c>set имя_функц(имя:тип) - функция получающая значение (для закрытой перем) как переменная (имя_функц=)</li>
 		<li c>static имя_функц(..) - статическая функция класса, запуск Имя_класса.имя_функц()</li>
 		<b>Методы жизненного цикла</b>
-		<li c>ngOnInit(){} - ф-ия выполняется сразу после создания компонента со всеми св-ми и методами (интерфейс OnInit)</li>
+		<li c>ngOnInit(){} - ф-ия выполняется сразу после создания компонента со всеми св-ми и методами (интерфейс OnInit - class имя implements OnInit{...} )</li>
 		<li c>ngOnChanges(перем: SimpleChanges){} - ф-ия выполняется при изменении входных св-в компонента (в первый раз - до ngOnInit), получает об: {имя_св:{previousValue:знач1,currentValue:знач2},..}, (интерфейс OnChanges)</li>
 		<li c>ngDoCheck(){} - ф-ия выполняется при каких-то изменениях, которые класс не может обнаружить (после ngOnInit, ngOnChanges), (интерфейс DoCheck)</li>
 		<li c>ngAfterContentInit(){} - ф-ия выполняется после подключения шаблона (один раз после первого ngDoCheck), (интерфейс AfterContentInit)</li>
@@ -9199,6 +9396,7 @@ System.config({
 		<li><h>ТЭГ</h><h>/ТЭГ</h> - элемент HTML</li>
 		<li><h>Комп</h><h>/Комп</h> - компонент приложения</li>
 		<li><h>ТЭГ</h><h>/ТЭГ</h> - компонент приложения</li>
+		<li><h>ng-content</h><h>/ng-content</h> - место внедрения в шаблоне оригинального содержимого</li>
 		<li>{{выражение|фильтр}} - вычисление выражения и отображерие</li>
 		<li>{{объект?.свойство}} / {{объект&&объект.свойство}} - выражение не создает ошибки при отсутствии об</li>
 		<li>{{объект!.свойство}} - выражение не создает ошибки при отсутствии об</li>
@@ -9217,10 +9415,10 @@ System.config({
 		<li>аттриб="значение" - значение аттрибута</li>
 		<li>bind-аттриб="выражение" - значение аттрибута</li>
 		<li>аттриб="{{'значение'/перем}}" - интерполяция значения аттрибута</li>
-		<li>[свойство_элем]="перем"/"'значение'" - входное свойство, применяется функция для записи в свойство элемента/класса компонента, необходим декоратор свойства в классе <c>@Input() свойство_элем</c></li>
+		<li>[свойство_элем]="перем"/"'значение'" - входное свойство, применяется функция для записи в свойство элемента/класса компонента, необходим декоратор свойства в классе <c>@Input() свойство_элем</c> или с псевдонимом <c>@Input('псевдоним') свойство_элем</c> </li>
 		<li>[свойство_элем]="лог_перем" - добавление входное свойство если лог_перем==true</li>
 		<li>[attr.имя_аттрибута]="значение" - установка значения аттрибута</li>
-		<li>(сообщение/событие)="ф-я()" - выходное свойство, при возникновении события внутри эл/компонента  запускает ф-ю сохраненную в текущем ел/компоненте, где $event - переданные д-е </li>
+		<li>(сообщение/событие)="ф-я()" - выходное свойство, при возникновении события внутри эл/компонента  запускает ф-ю сохраненную в текущем ел/компоненте, где $event - переданные д-е, событие- переменная типа EventEmitter и запущена браузером или програмно this.событие.emit('') </li>
 		<li>#имя / ref-имя - аттрибут создает ссылку на об_эл/компонент для использования во всем шаблоне как имя.свойство</li>
 		<li></li>
 		<li>[*]ngIf="лог_знач" - устанавливает в DOM клон элемента при true, отсутствует при false [* - в DOM весь элемент заключает в тэг <h>template</h>]</li>
@@ -9262,7 +9460,18 @@ System.config({
 		<li>=FormBuilder.group({имя1:ф-я_Control,...}) - объединение контрольных ф-й</li>
 		<li>=FormBuilder.control(нач_знач,ф-я_валидац) аналог =new Control(нач_знач,ф-я_валидац) - создание переменной с контроллером значения</li>
 		<li>=FormBuilder.group({имя1:[нач_знач,ф-я_Control],...}) - сокращенный вариант объединение контрольных ф-й</li>
-		<li>Validator.ф-я - ф-я получает об Control и возвращает null при успехе или {имя_ошиб:true}</li>
+		<li hd>Validators.ф-я - ф-я получает об Control и возвращает null при успехе или {имя_ошиб:true}
+			<ul>
+			<li>Validators.required - проверка не пустого значения поля</li>
+			<li>Validators.email - проверка макета email</li>
+			<li>Validators.min(N) - проверка минимального значения</li>
+			<li>Validators.max(N) - проверка максимального значения</li>
+			<li>Validators.minLength(N) - проверка минимальной длины значения</li>
+			<li>Validators.maxLength(N) - проверка максимальной длины значения</li>
+			<li>Validators.pattern(RegExp) - проверка макета значения</li>
+			<li>Validators.compose(масс_валидаторов) - создание одного из массива валидаторов</li>
+			</ul>
+		</li>
 		</ul>
 	</li>
 	<li hd>Анимация
@@ -9408,6 +9617,13 @@ System.config({
 			<li c>.cloneElement(React-компонент,об_свойств) - получение копии помпонента
 			<li c>.createFactory("тэг") - получение ф-ии для создания новых элементов подобно .createElement("тэг"...)
 			<li c>.isValidElement(об) - проверка об/эл/комп, что он создан в React
+			<li c>.createRef() - создание объекта для присвоения атрибуту ref - .current содержит ссылку на эл./компон.
+			<li c>.forwardRef() - создание объекта
+			<li c>.Fragment - компонент объединяющий набор элементов в render(), но можно объединить пустым тэгом:  <h></h>...<h>/</h>
+			<li c>.Component - компонент
+			<li c>.PureComponent - компонент обновляется при изменении props, state
+			<li c>.Suspense - компонент
+			<li c>.lazy - компонент
 			<li hd>.Children - об с методами работы с this.props.children
 			<ul>
 				<li c>.map(children, function(thisArg)) - возвращает новый массив проходя массив об_эл из children выполняя ф-ю
@@ -10034,28 +10250,6 @@ module.exports = {
 </ul>	
 	
 	</div>
-<h3 class="my_b1">angular-seed - готовое приложение на AngularJS</h3>
-	<div hidden>
-	<ul>
-	<li c>git clone https://github.com/angular/angular-seed.git - клонировать всю систему каталогов и файлов используя git</li>
-    <li c>cd angular-seed - перейти в созданный каталог</li>
-	<li c>npm install - установка зависимых программ с помощью npm в папку node_modules</li>
-	<li c>авмоматически будет запущена команд bower install - установка зависимых программ с помощью bower в папку app/bower_components</li>
-	<li c>npm start - запуск приложения, которое запускает локальный web-сервер http://localhost:8000/app/index.html</li>
-	<li hd>тестирование<ul>
-	<li c>npm test - запуск всех Jasmine-тестов установленых в папке test/unit/ с настройкой karma-runner в файле test/karma.conf.js</li>
-	<li c>npm run имя_теста - запуск одного ф-ла Jasmine-теста</li>
-	</ul></li>
-	<li hd>Обновление
-	<ul>
-	<li c>npm upbate - обновление зависимых модулей записанных в package.json</li>
-	<li c>bower upbate - обновление зависимых модулей записанных в bower.json</li>
-	<li c>npm run update-index-async - асинхронное обновление </li>
-	</ul>
-	</li>
-	<li></li>
-	</ul>
-	</div>	
 
 	
 <h3 class="my_b1">grunt.js - система сборки приложений на JavaScript</h3>
@@ -10389,8 +10583,8 @@ Node.js
 		<li c>kill N-число - прекращение работы фонового Node-модуля по его идентификатору</li>
 		<li c>make uninstall - удаление Node.js для установки новой версии</li>
 		<li><c>node имя.js &gt; имя1.txt</c> - перенаправление вывода в файл</li>
-		<li><c>node</c> - переход к REPL - движку JavaScript с приглашением ">", вводимое выражение после ENTER вычисляется и отображается результат
-			<ul><li c>выражение - после нажатия ENTER выполняетвыражение</li>
+		<li hd><c>node</c> - переход к REPL - движку JavaScript с приглашением ">", вводимое выражение после ENTER вычисляется и отображается результат
+			<ul><li c>выражение - после нажатия ENTER выполняет выражение</li>
 			<li c>_ - подчеркивание обращается к результату предыдущего выражения</li>
 			<li c>var выражение - выражение вычисляется но результат выдает undefined</li>
 			<li c>... выражение - точки применяют для визуальной эстетики,т.к.они игнорируются</li>
@@ -10514,7 +10708,7 @@ Node.js
 			<li><c>.stdin</c> - стандартный поток ввода с клавиатуры (асинхр)
 				<ul><li c>.resume() - запуск потока для выполнения ввода, будет генерировать события 'data'</li>
 				<li c>.pause() - остановка потока</li>
-				<li c>.on('data',ф-я(строка_данных)) - установка слушателя события ввода данных, ф-я полычает данные в аргумент</li>
+				<li c>.on('data',ф-я(строка_данных)) - установка слушателя события ввода данных, ф-я получает данные в аргумент</li>
 				<li c>.pipe(поток_выв) - перенаправление вх потока к потоку вывода</li>
 				</ul></li>
 			<li><c>.stdout</c> - стандартный поток вывода на дисплей (асинхр)
