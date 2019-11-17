@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
 <!-- 0.0.7 -->
@@ -174,15 +174,15 @@ else {l=(new El(tag.tag?tag.tag:tag.tagsv,'tagsv' in tag));
 function show_react(b,s){ 
 var w=open('','new_window'); 
 w.document.open();
-w.document.write('<!DOCTYPE html><html><head><title>React</title>'); 
+w.document.write('<html><head><title>React</title>'); 
 w.document.write((new El("script")).atr({src:setup.data.rct.val}).el.outerHTML);
 w.document.write((new El("script")).atr({src:setup.data.rctd.val}).el.outerHTML);
 w.document.write((new El("script")).atr({src:setup.data.rcrt.val}).el.outerHTML);
 w.document.write((new El("script")).atr({src:setup.data.bbl.val}).el.outerHTML);
-w.document.write('</head><body>'); 
-w.document.write(b.outerHTML); 
-w.document.write(s.outerHTML); 
-w.document.write('</body></html>'); 
+w.document.write("</head>");
+var a="<body>"+b.outerHTML+s.outerHTML+"</body>";
+w.document.write(a); 
+w.document.write("</html>"); 
 w.document.close();
 }
 //***************
@@ -968,7 +968,7 @@ shape.shema.n2=[
 
 
 </head>
-<body onload="init();" > 
+<body onload="init()"> 
 
 <div class="menu" align="right">
 	<button onclick="this.tm=setInterval(function(a){a.innerHTML=Date();},1000,this); this.setAttribute('onclick','clearInterval(this.tm); setTimeout(function(a){a.hidden=true;},5000,this);');">time</button>
@@ -1646,7 +1646,7 @@ multipart/form-data - не кодирование(передача файлов)
 <div><div class="code">
 <div><INPUT type="file" id="in_music" onchange="document.getElementById('music').src= window.URL.createObjectURL(this.files[0].slice(0, this.files[0].size));"></div>
 
-<audio controls src="file:\\\C:\Users\Ontario 2\Music\prm.mp3" id="music">
+<audio controls id="music">
 </audio>
 </div></div>
 
@@ -1679,7 +1679,7 @@ multipart/form-data - не кодирование(передача файлов)
 
 
 <div><div class="code">
-<VIDEO controls width="400" height="300" class="b1" src="file:\\\C:\My_file\film3.mkv">
+<VIDEO controls width="400" height="300" class="b1" >
 </VIDEO></div></div><br>
 
 <h>CANVAS</h>..<h>/CANVAS</h> - блок содержащий только холст для рисования в javascript (2d и 3d)<br>
@@ -1804,10 +1804,10 @@ data-html="['',{tagsv:'svg',attr:{width:'100',height:'100'},in:{tagsv:'circle',a
 <li><h>USE  </h><h>/USE</h> - повторное отображение SVG-фигуры/изображения и применение к ней общих аттриутов
 <button onclick="show_tag(this)" data-html="['',{tagsv:'svg',attr:{width:'500',height:'100'},in:[{tagsv:'rect',attr:{x:'10',y:'10',width:'50',height:'30',fill:'yellow',stroke:'blue',id:'id_usesvg'}},{tagsv:'use',attr:{'href':'#id_usesvg',x:'80',heght:'50'}},{tagsv:'use',attr:{'href':'#id_usesvg',x:'150',width:'80'}}]},'']">show</button><br>
 <t>xlink:href=<q>#ID-имя</q></t> - ссылка на готовую  SVG-фигуру<br>
-					<t>x="<input id="svg_im_x" style="width:20px" value="150">" 
-					y="<input id="svg_im_y" style="width:20px" value="10">"</t> - левая-верхняя точка начала рисования фигуры<br>
-					<t>width="<input id="svg_im_width" style="width:20px" value="150">" 
-					height="<input id="svg_im_height" style="width:20px" value="120">"</t> - ширина и высота фигуры<br>
+					<t>x="<input id="svg_im_x_" style="width:20px" value="150">" 
+					y="<input id="svg_im_y_" style="width:20px" value="10">"</t> - левая-верхняя точка начала рисования фигуры<br>
+					<t>width="<input id="svg_im_width_" style="width:20px" value="150">" 
+					height="<input id="svg_im_height_" style="width:20px" value="120">"</t> - ширина и высота фигуры<br>
 
 </li>
 <br>					
@@ -1909,11 +1909,11 @@ data-html="['',{tagsv:'svg',attr:{width:'100',height:'100'},in:{tagsv:'circle',a
 
 	
 	
-	<ul><li><h>stop offset="0%" stop-color="<input size="7" id="svg_c1">"&gt;&lt;/stop</h>
-<input type="color" value="#ffffff" onchange="svg_gr1_c1(this.value);document.getElementById('svg_c1').value=this.value;">
+	<ul><li><h>stop offset="0%" stop-color="<input size="7" id="svg_c1_">"&gt;&lt;/stop</h>
+<input type="color" value="#ffffff" onchange="svg_gr1_c1(this.value);document.getElementById('svg_c1_').value=this.value;">
 	- установка цветов от 0%</li>
-	<li><h>stop offset="100%" stop-color="<input size="7" id="svg_c2">"&gt;&lt;/stop</h>
-<input type="color" value="#000000" onchange="svg_gr1_c2(this.value);document.getElementById('svg_c2').value=this.value;">
+	<li><h>stop offset="100%" stop-color="<input size="7" id="svg_c2_">"&gt;&lt;/stop</h>
+<input type="color" value="#000000" onchange="svg_gr1_c2(this.value);document.getElementById('svg_c2_').value=this.value;">
 	- изменения цветов до 100%</li></ul></li></ul></div>
 <br>					
 <div hd><b>SVG-АНИМАЦИИ</b>	<ul>
@@ -10369,14 +10369,16 @@ module.exports = {
 	<div hidden>
 	 Установка <c>npm install webpack -g</c>, надо создать вручную скрипт webpack.config.js для выполнения в node.js 
 	<br><c>webpack</c> - запуск модуля с настройками в webpack.config.js
+	<br><c>webpack-dev-server --port 8000</c> - запуск сервера и модуля с настройками в webpack.config.js
 	<ul>	
 	<li><c>module.exports = {..}/[{..},{..},...]</c> - единственный об, который содержит настройку одной сборки / массив нескольких настроек сборки
 		<ul>	
+		<li><c>mode</c>:'production' - режим долгий и оптимизированый (development - быстрый)</li>
 		<li><c>context</c>:'папка' - базовый путь для всех входных файлов</li>
-		<li><c>entry</c>:'файл'/{'имя1':'файл1',..} - первый входной/исходный файл (точка входа)</li>
+		<li><c>entry</c>:'файл'/{'имя1':'файл1',..} - первый входной файл/набор исходных файлов (точка входа)</li>
 		<li><c>output</c>:об - выходной файл
 			<ul>			
-			<li s>filename:'имя.js'/'[name].js' - имя файла/ подстановка имя1 из entry</li>
+			<li s>filename:'имя.js'/'[name].js' - имя итогового файла/ подстановка имя1 из entry</li>
 			<li s>path:'путь' - полный путь для выходных файлов</li>
 			<li s>library:'имя'/'[name]' - </li>
 			</ul>			
@@ -10389,7 +10391,7 @@ module.exports = {
 		</li>
 		<li><c>devtool</c>:null/'значение' - установить режим записи всех действий сборки
 			<ul>			
-			<li c>source-map - создание дополнительного файла имя.map</li>
+			<li c>source-map - создание дополнительного файла имя.map для контроля за ошибками</li>
 			<li c>inline-source-map - сохранение информации в результирующем файле</li>
 			<li></li>
 			</ul>			
@@ -10402,10 +10404,10 @@ module.exports = {
 		</li>
 		<li hd><c>module</c>:об - дополнительные модули
 			<ul>			
-			<li><c>loaders</c>:масс_об - загрузчики, компиляторы
+			<li><c>rules</c>:масс_об - загрузчики загружают не js-файлы
 				<ul>			
-				<li s>loader:'имя_загр' - имя зарузчика сокращенное/полное: babel / babel-loader, typescript, coffeescript</li>
-				<li s>test:рег_выраж - фильтр по расширению файла: /\.js$/</li>
+				<li s>use:'имя_загр' - имя зарузчика сокращенное/полное: babel / babel-loader, typescript, coffeescript, css-loader, ts-loader, sass-loader</li>
+				<li s>test:рег_выраж - фильтр для выбора файла по расширению: /\.js$/</li>
 				<li s>include:масс_путей - строки пути к файлам</li>
 				<li s>exclude:рег_выраж - фильтр для файлов исключаемых из выбора</li>
 				</ul>				
@@ -10432,6 +10434,15 @@ module.exports = {
 			<li s>extensions:масс_расширен - массив расширений файлов с точкой для поиска</li>
 			</ul>			
 		</li>
+		<li hd><c>devServer</c> - запуск сервера
+			<ul>			
+			<li s>port:N - порт сервера</li>
+			<li s>contentBase:'путь' - путь по которому обслуживаются файлы сервера</li>
+			<li s>filename:'имя_файла' - файл открываемый на сервере</li>
+			<li s>open:true - открывает браузер с сервером</li>
+			<li s>port:N - порт сервера</li>
+			</ul>			
+		</li>		
 		</ul>	
 	</li>	
 	<li c>process.nev.NODE_ENV - получить node-переменную, которая может быть 'development' или 'production'</li>
@@ -12938,7 +12949,7 @@ function a(){var xhr=new XMLHttpRequest();
 
 <section id="sec6" hidden class="blok"> 
 Приложения
-<h3 class="my_b1">Git - локальное хранилище версий программ, может работать с сетевім хранилищем GitHub</h3>
+<h3 class="my_b1">Git - локальное хранилище версий программ, может работать с сетевым хранилищем GitHub</h3>
 	<div hidden>
 	<ul><li>Настройка
 		<ul><li>git config --global user.name "Ваше имя"</li>
